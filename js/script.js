@@ -30,12 +30,12 @@ function generateSignature(type) {
       mobileHTML = `Celular:&nbsp;<a href="tel:+51${mobile.replace(
         /\D/g,
         ""
-      )}">${mobile}</a> `;
+      )}">${mobile}</a> &nbsp;&nbsp;`;
       if (whatsapp) {
         mobileHTML += `<a href="https://api.whatsapp.com/send?phone=+51${mobile.replace(
           /\D/g,
           ""
-        )}&text=Hola,%20${name}%20solicito%20informes%20de%20productos"><img class="mensajer" src="images/whatsapp.png" alt="Whatsapp"/></a> `;
+        )}&text=Hola,%20${name}%20solicito%20informes%20de%20productos"><img class="mensajer" src="images/whatsapp.png" alt="Whatsapp"/></a> &nbsp;&nbsp;`;
       }
       if (telegram) {
         mobileHTML += `<a href="https://t.me/+51${mobile.replace(
@@ -51,7 +51,7 @@ function generateSignature(type) {
       mobile2HTML = `Celular 2:&nbsp;<a href="tel:+51${mobile2.replace(
         /\D/g,
         ""
-      )}">${mobile2}</a> `;
+      )}">${mobile2}</a> &nbsp;&nbsp;`;
       if (whatsapp2) {
         mobile2HTML += `<a href="https://api.whatsapp.com/send?phone=+51${mobile2.replace(
           /\D/g,
@@ -96,7 +96,7 @@ function generateSignature(type) {
           </td>
         </tr>`;
     }
-  
+
     let ecoHTML = `
       <tr>
         <td colspan="2" class="eco_mail" style="font-size: 8pt; font-weight: 300; font-style: italic; color: #0b7935;">
@@ -106,10 +106,10 @@ function generateSignature(type) {
       </tr>`;
   
     let signatureHTML = `
-      <table class="signature" cellpadding="0" cellspacing="0" style="font-family: 'Roboto', sans-serif;">
+      <table class="signature" cellpadding="0" cellspacing="0" style="font-family: 'Roboto', sans-serif; width:320px">
        <tr>
-       <td style="height: auto; width: 90px; padding-right: 3px;">
-        <img src="images/logo cip.png" alt="www.Cipsa.com.pe" style="width: 90px; height : 94px;">
+       <td width="80" valign="top" style="width: 70pt; padding: 0px;2px;0px;0px;">
+        <img src="images/logo cip.png" alt="www.Cipsa.com.pe" style="width: 90px; height : auto;">
       </td>
       <td style="border-left: 4px solid #00225e; padding-left: 8px;">
         <p style="font-size: 11pt; font-weight: bold; margin-top: 5px; margin-bottom: 3px;">${name}</p>
