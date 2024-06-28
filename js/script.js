@@ -41,7 +41,7 @@ function generateSignature(type) {
         mobileHTML += `<a href="https://t.me/+51${mobile.replace(
           /\D/g,
           ""
-        )}?text=Hola,%20${name}%20solicito%20informes%20de%20productos"><img class="mensajer" src="images/telegram.png" alt="Telegram"/></a>`;
+        )}?text=Hola,%20${name}%20solicito%20informes%20de%20productos"><img class="mensajer" src="images/Telegram.png" alt="Telegram"/></a>`;
       }
       mobileHTML += `<br>`;
     }
@@ -70,13 +70,13 @@ function generateSignature(type) {
               <img class="social_link" src="images/ubicacion.png" alt="Av. Los Frutales 419 Ate - Lima" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
             </a>`;
       if (facebook) {
-        socialHTML += `&nbsp;<a href="${facebook}" target="_blank" rel="noopener"><img class="social_link" src="images/facebook.png" alt="facebook" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
+        socialHTML += `&nbsp;<a href="${facebook}" target="_blank" rel="noopener"><img class="social_link" src="images/Facebook.png" alt="facebook" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
       }
       if (instagram) {
-        socialHTML += `&nbsp;<a href="${instagram}" target="_blank" rel="noopener"><img class="social_link" src="images/instagram.png" alt="instagram" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
+        socialHTML += `&nbsp;<a href="${instagram}" target="_blank" rel="noopener"><img class="social_link" src="images/Instagram.png" alt="instagram" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
       }
       if (youtube) {
-        socialHTML += `&nbsp;<a href="${youtube}" target="_blank" rel="noopener"><img class="social_link" src="images/youtube.png" alt="youtube" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
+        socialHTML += `&nbsp;<a href="${youtube}" target="_blank" rel="noopener"><img class="social_link" src="images/Youtube.png" alt="youtube" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
       }
       if (tiktok) {
         socialHTML += `&nbsp;<a href="${tiktok}" target="_blank" rel="noopener"><img class="social_link" src="images/tiktok.png" alt="tiktok" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
@@ -109,7 +109,7 @@ function generateSignature(type) {
       <table class="signature" cellpadding="0" cellspacing="0" style="font-family: 'Roboto', sans-serif;">
        <tr>
        <td style="height: auto; width: 90px; padding-right: 3px;">
-        <img src="images/logo cip.png" alt="www.Cipsa.com.pe" style="width: 90px; height : 94px;">
+        <img src="images/LOGO CIP.png" alt="www.Cipsa.com.pe" style="width: 90px; height : 94px;">
       </td>
       <td style="border-left: 4px solid #00225e; padding-left: 8px;">
         <p style="font-size: 11pt; font-weight: bold; margin-top: 5px; margin-bottom: 3px;">${name}</p>
