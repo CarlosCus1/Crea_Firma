@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Carlos cusi">
+  <title>Crea tu firma</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
+</head>
+
+<body>
+  <div class="form-container">
+    <h2>Crea tu firma</h2>
+    <form>
+      <div class="form-row">
+        <label for="name" class="label-10">Nombre:</label>
+        <input type="text" id="name" class="input-35">
+        <label for="position" class="label-10">Cargo:</label>
+        <input type="text" id="position" class="input-35">
+      </div>
+      <div class="form-row">
+        <label for="phone" class="label-10">Teléfono:</label>
+        <input type="text" id="phone" class="input-35">
+        <label for="extension" class="label-10">Ext.:</label>
+        <input type="text" id="extension" class="input-35">
+      </div>
+      <div class="form-row">
+        <label for="mobile" class="label-10">Móvil:</label>
+        <input type="text" id="mobile" class="input-35">
+        <label for="mobile2" class="label-10">Móvil 2:</label>
+        <input type="text" id="mobile2" class="input-35">
+      </div>
+      <div class="form-row">
+        <label for="whatsapp" class="label-10">Wsp:</label>
+        <input type="text" id="whatsapp" class="input-35">
+        <label for="whatsapp2" class="label-10">Wsp 2:</label>
+        <input type="text" id="whatsapp2" class="input-35">
+      </div>
+      <div class="form-row">
+        <label for="telegram" class="label-10">Telegram:</label>
+        <input type="text" id="telegram" class="input-35">
+        <label for="facebook" class="label-10">Facebook:</label>
+        <input type="text" id="facebook" class="input-35">
+      </div>
+      <div class="form-row">
+        <label for="instagram" class="label-10">Instagram:</label>
+        <input type="text" id="instagram" class="input-35">
+        <label for="youtube" class="label-10">YouTube:</label>
+        <input type="text" id="youtube" class="input-35">
+      </div>
+      <div class="form-row">
+        <label for="tiktok" class="label-10">TikTok:</label>
+        <input type="text" id="tiktok" class="input-35">
+      </div>
+      <div class="form-row">
+        <button type="button" onclick="generateSignature('full')" class="button-40">Generar Firma Completa</button>
+        <button type="button" onclick="generateSignature('medium')" class="button-40">Generar Firma Media</button>
+        <button type="button" onclick="generateSignature('short')" class="button-40">Generar Firma Corta</button>
+      </div>
+    </form>
+    <div id="signatureOutput"></div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

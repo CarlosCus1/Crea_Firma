@@ -1,0 +1,104 @@
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: #121212;
+  color: #ffa500;
+  margin: 0;
+  padding: 0;
+}
+
+.form-container {
+  width: 60%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 50px;
+  background-color: #1e1e1e;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.label-10 {
+  flex: 10%;
+  text-align: right;
+  margin-right: 5px;
+  color: #ffa500;
+}
+
+.input-35 {
+  flex: 35%;
+  background-color: #615f5f;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.button-40 {
+  flex: 40%;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.button-40:hover {
+  background-color: #0056b3;
+}
+
+#signatureOutput {
+  margin-top: 20px;
+  background-color: #fff;
+  color: #202c33;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  font-size: 9pt;
+}
+
+#signatureOutput .nombre {
+  font-size: 11pt;
+  font-weight: normal;
+  padding-bottom: 50px;
+}
+
+#signatureOutput .position {
+  font-size: 10pt;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#signatureOutput p {
+  margin-bottom: 5px;
+}
+
+table.signature {
+  width: 60%;
+}
+
+table.signature td {
+  vertical-align: top;
+}
+
+#signatureOutput .social_link {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+#signatureOutput a {
+  color: #202c33;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+#signatureOutput a:hover {
+  text-decoration: underline;
+}
