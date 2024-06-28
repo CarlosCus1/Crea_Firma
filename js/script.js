@@ -70,13 +70,13 @@ function generateSignature(type) {
               <img class="social_link" src="images/ubicacion.png" alt="Av. Los Frutales 419 Ate - Lima" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
             </a>`;
       if (facebook) {
-        socialHTML += `&nbsp;<a href="${facebook}" target="_blank" rel="noopener"><img class="social_link" src="images/Facebook.png" alt="facebook" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
+        socialHTML += `&nbsp;<a href="${facebook}" target="_blank" rel="noopener"><img class="social_link" src="images/facebook.png" alt="facebook" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
       }
       if (instagram) {
-        socialHTML += `&nbsp;<a href="${instagram}" target="_blank" rel="noopener"><img class="social_link" src="images/Instagram.png" alt="instagram" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
+        socialHTML += `&nbsp;<a href="${instagram}" target="_blank" rel="noopener"><img class="social_link" src="images/instagram.png" alt="instagram" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
       }
       if (youtube) {
-        socialHTML += `&nbsp;<a href="${youtube}" target="_blank" rel="noopener"><img class="social_link" src="images/Youtube.png" alt="youtube" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
+        socialHTML += `&nbsp;<a href="${youtube}" target="_blank" rel="noopener"><img class="social_link" src="images/youtube.png" alt="youtube" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
       }
       if (tiktok) {
         socialHTML += `&nbsp;<a href="${tiktok}" target="_blank" rel="noopener"><img class="social_link" src="images/tiktok.png" alt="tiktok" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a>`;
