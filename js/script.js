@@ -106,7 +106,7 @@ function generateSignature(type) {
       </tr>`;
   
     let signatureHTML = `
-      <table class="signature" cellpadding="0" cellspacing="0" border= "1" style="font-family: 'Roboto', sans-serif; width:320px; border-color: rgba(0, 0, 0, 0);">
+      <table class="signature" cellpadding="0" cellspacing="0" border= "0" style="font-family: 'Roboto', sans-serif; width:320px; border-color: rgba(0, 0, 0, 0);">
        <tr>
        <td width="80" valign="top" style="width: 70pt; padding: 0px;2px;0px;0px;">
         <img src="images/logo cip.png" alt="www.Cipsa.com.pe" style="width: 90px; height : auto;">
