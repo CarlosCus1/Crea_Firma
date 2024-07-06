@@ -10,7 +10,6 @@ body {
   width: 60%;
   margin: auto;
   padding: 20px;
-  border: 1px solid #333;
   border-radius: 50px;
   background-color: #1e1e1e;
 }
@@ -54,51 +53,39 @@ body {
   background-color: #0056b3;
 }
 
-#signatureOutput {
+.signature-container {
   margin-top: 20px;
-  background-color: #fff;
-  color: #202c33;
   padding: 20px;
-  border: 1px solid #333;
   border-radius: 5px;
   font-size: 9pt;
-}
-
-#signatureOutput .nombre {
-  font-size: 11pt;
-  font-weight: normal;
-  padding-bottom: 50px;
-}
-
-#signatureOutput .position {
-  font-size: 10pt;
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-
-#signatureOutput p {
-  margin-bottom: 5px;
-}
-
-table.signature {
-  width: 60%;
-}
-
-table.signature td {
-  vertical-align: top;
-}
-
-#signatureOutput .social_link {
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-
-#signatureOutput a {
-  color: #202c33;
   text-decoration: none;
-  font-weight: normal;
+  padding-bottom: 5px;
 }
 
-#signatureOutput a:hover {
-  text-decoration: underline;
+.signature-container.dark-mode {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.signature-container.light-mode {
+  background-color: #fff;
+  color: #202c33;
+}
+
+.social_link a {
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .signature-container {
+    width: 100%;
+    font-size: 8pt;
+  }
+}
+
+@media (min-width: 768px) {
+  .signature-container {
+    width: 60%;
+    font-size: 9pt;
+  }
 }
