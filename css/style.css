@@ -1,91 +1,168 @@
+:root {
+  --primary-color-dark: #b0bec5; /* Gris azulado sobrio para tema oscuro */
+  --primary-color-light: #455a64; /* Azul grisáceo para tema claro */
+  --dark-bg: #121212;
+  --light-bg: #e0e0e0;
+  --form-bg-dark: #1e1e1e;
+  --form-bg-light: #ffffff;
+  --input-bg-dark: #2d2d2d;
+  --input-bg-light: #f5f5f5;
+  --button-bg: #455a64;
+  --button-hover: #607d8b;
+  --signature-bg: #f5f5f5;
+  --text-dark: #333333; /* Cambiado de #111111 a #333333 */
+}
+
 body {
   font-family: "Roboto", Arial, sans-serif;
-  background-color: #121212;
-  color: #ffa500;
   margin: 0;
-  padding: 0;
+  padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme {
+  background-color: var(--dark-bg);
+  color: var(--primary-color-dark);
+}
+
+body.light-theme {
+  background-color: var(--light-bg);
+  color: var(--primary-color-light);
 }
 
 .form-container {
   width: 60%;
-  margin: auto;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
-  border-radius: 50px;
-  background-color: #1e1e1e;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+body.dark-theme .form-container {
+  background-color: var(--form-bg-dark);
+}
+
+body.light-theme .form-container {
+  background-color: var(--form-bg-light);
+}
+
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(20deg);
 }
 
 .form-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  align-items: center;
 }
 
 .label-10 {
   flex: 10%;
   text-align: right;
   margin-right: 5px;
-  color: #ffa500;
+}
+
+body.dark-theme .label-10 {
+  color: var(--primary-color-dark);
+}
+
+body.light-theme .label-10 {
+  color: var(--primary-color-light);
 }
 
 .input-35 {
   flex: 35%;
-  background-color: #615f5f;
-  color: #fff;
-  border: 1px solid #555;
+  border: 1px solid #444;
   border-radius: 5px;
   padding: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme .input-35 {
+  background-color: var(--input-bg-dark);
+  color: #fff;
+}
+
+body.light-theme .input-35 {
+  background-color: var(--input-bg-light);
+  color: #333333; /* Cambiado de #111111 a #333333 */
+}
+
+.form-row.buttons {
+  justify-content: center;
+  gap: 10px;
 }
 
 .button-40 {
-  flex: 40%;
-  margin-right: 10px;
-  background-color: #007bff;
+  flex: 1;
+  max-width: 40%;
+  background-color: var(--button-bg);
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
-  text-align: center;
-  padding-bottom: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.button-40:hover {
-  background-color: #0056b3;
+.button-40:hover,
+.button-40:focus {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  outline: none;
 }
 
 .signature-container {
   margin-top: 20px;
-  padding: 20px;
+  padding: 15px;
   border-radius: 5px;
   font-size: 9pt;
+  max-width: 315px;
+  background-color: var(--signature-bg);
+  color: var(--text-dark);
+}
+
+.signature-container a {
+  color: var(--text-dark);
   text-decoration: none;
-  padding-bottom: 5px;
 }
 
-.signature-container.dark-mode {
-  background-color: #1e1e1e;
-  color: #fff;
-}
-
-.signature-container.light-mode {
-  background-color: #fff;
-  color: #202c33;
-}
-
-.social_link a {
-  text-decoration: none;
+.signature-container a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 767px) {
-  .signature-container {
-    width: 100%;
-    font-size: 8pt;
+  .form-container {
+    width: 90%;
   }
-}
-
-@media (min-width: 768px) {
-  .signature-container {
-    width: 60%;
-    font-size: 9pt;
+  .form-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .label-10,
+  .input-35 {
+    flex: 100%;
+    margin: 5px 0;
+  }
+  .button-40 {
+    max-width: 100%;
   }
 }
