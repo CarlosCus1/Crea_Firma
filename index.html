@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Carlos cusi">
-  <title>Crea tu firma</title>
+  <meta name="author" content="Carlos Cusi">
+  <meta name="collaboration" content="Grok">
+  <title>Crea tu Firma</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
+  <!-- Incluimos html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-
-<body>
+<body class="dark-theme">
   <div class="form-container">
-    <h2>Crea tu firma</h2>
-    <form>
+    <div class="header-controls">
+      <h2>Crea tu Firma</h2>
+      <button id="theme-toggle" class="theme-toggle">🌙</button>
+    </div>
+    <div class="form-content">
+      <!-- Campo para cargar el logo con botón para quitar -->
+      <div class="form-row">
+        <label for="logo-upload" class="label-10">Logo:</label>
+        <input type="file" id="logo-upload" class="input-35" accept="image/*">
+        <label class="label-10"></label>
+        <button type="button" id="remove-logo" class="button-40">Quitar Logo</button>
+      </div>
       <div class="form-row">
         <label for="name" class="label-10">Nombre:</label>
         <input type="text" id="name" class="input-35" placeholder="Ingresa tu Nombre">
         <label for="position" class="label-10">Cargo:</label>
-        <input type="text" id="position" class="input-35" placeholder="Ingresa puesto o Area">
+        <input type="text" id="position" class="input-35" placeholder="Ingresa puesto o Área">
       </div>
       <div class="form-row">
         <label for="phone" class="label-10">Teléfono:</label>
-        <input type="text" id="phone" class="input-35" value="3134200">
+        <input type="text" id="phone" class="input-35" placeholder="Ej: 3134200">
         <label for="extension" class="label-10">Ext.:</label>
         <input type="text" id="extension" class="input-35" placeholder="Ingresa Anexo">
       </div>
       <div class="form-row">
         <label for="mobile" class="label-10">Móvil:</label>
-        <input type="text" id="mobile" class="input-35" placeholder="Ingresa Numero Celular">
+        <input type="text" id="mobile" class="input-35" placeholder="Ingresa Número Celular">
         <label for="mobile2" class="label-10">Móvil 2:</label>
-        <input type="text" id="mobile2" class="input-35" placeholder="Numero Alternativo">
+        <input type="text" id="mobile2" class="input-35" placeholder="Número Alternativo">
       </div>
       <div class="form-row">
         <label for="whatsapp" class="label-10">Wsp:</label>
-        <input type="text" id="whatsapp" class="input-35" placeholder="Ingresa numero">
+        <input type="text" id="whatsapp" class="input-35" placeholder="Ingresa Número">
         <label for="whatsapp2" class="label-10">Wsp 2:</label>
-        <input type="text" id="whatsapp2" class="input-35" placeholder="Numero Alternativo">
+        <input type="text" id="whatsapp2" class="input-35" placeholder="Número Alternativo">
       </div>
       <div class="form-row">
         <label for="telegram" class="label-10">Telegram:</label>
@@ -52,17 +63,28 @@
       </div>
       <div class="form-row">
         <label for="tiktok" class="label-10">TikTok:</label>
-        <input type="text" id="tiktok" class="input-35" value="https://www.tiktok.com/@vinifanperu" placeholder="Comparte tu link">
+        <input type="text" id="tiktok" class="input-35" value="https://www.tiktok.com/@vinifanperu" placeholder="Comparte tu Link">
+        <label for="line-color" class="label-10">Color Línea:</label>
+        <select id="line-color" class="input-35">
+          <option value="#1f3a44">Gris Azulado</option>
+          <option value="#2e4053" selected>Azul Pizarra</option>
+          <option value="#3e4a3d">Verde Grisáceo</option>
+          <option value="#4a5e6c">Azul Grisáceo</option>
+        </select>
       </div>
-      <div class="form-row">
-        <button type="button" onclick="generateSignature('full')" class="button-40">Generar Firma Completa</button>
-        <button type="button" onclick="generateSignature('medium')" class="button-40">Generar Firma Media</button>
-        <button type="button" onclick="generateSignature('short')" class="button-40">Generar Firma Corta</button>
+      <div class="form-row buttons">
+        <button type="button" data-type="full" class="button-40">Generar Firma Completa</button>
+        <button type="button" data-type="medium" class="button-40">Generar Firma Media</button>
+        <button type="button" data-type="short" class="button-40">Generar Firma Corta</button>
       </div>
-    </form>
+      <div class="form-row buttons">
+        <button type="button" id="copy-signature" class="button-40">Copiar Firma (Imagen)</button>
+        <button type="button" id="copy-html" class="button-40">Seleccionar para Copiar (HTML)</button>
+        <button type="button" id="reset-form" class="button-40">Reiniciar</button>
+      </div>
+    </div>
     <div id="signatureOutput" class="signature-container"></div>
   </div>
   <script src="js/script.js"></script>
 </body>
-
 </html>
