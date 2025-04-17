@@ -1,6 +1,7 @@
+/* Variables globales */
 :root {
-  --primary-color-dark: #b0bec5; /* Gris azulado sobrio para tema oscuro */
-  --primary-color-light: #455a64; /* Azul grisáceo para tema claro */
+  --primary-color-dark: #b0bec5;
+  --primary-color-light: #455a64;
   --dark-bg: #121212;
   --light-bg: #e0e0e0;
   --form-bg-dark: #1e1e1e;
@@ -8,53 +9,58 @@
   --input-bg-dark: #2d2d2d;
   --input-bg-light: #f5f5f5;
   --button-bg: #455a64;
-  --button-hover: #607d8b;
-  --signature-bg: #f5f5f5;
-  --text-dark: #333333; /* Cambiado de #111111 a #333333 */
+  --button-hover: #ff9800; /* Naranja */
+  --button-active: #ff6d00; /* Naranja oscuro */
+  --success-color: #4caf50;
+  --error-color: #f44336;
+  --warning-color: #ff9800;
+  --info-color: #2196f3;
+  --signature-bg: #ffffff;
+  --text-dark: #333333;
+  --text-light: #ffffff;
+  --modal-bg: rgba(0, 0, 0, 0.7);
 }
 
+/* Estilos base y temas */
 body {
   font-family: "Roboto", Arial, sans-serif;
   margin: 0;
   padding: 20px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 body.dark-theme {
   background-color: var(--dark-bg);
   color: var(--primary-color-dark);
 }
-
 body.light-theme {
   background-color: var(--light-bg);
   color: var(--primary-color-light);
 }
 
+/* Contenedor del formulario */
 .form-container {
   width: 60%;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 }
-
 body.dark-theme .form-container {
   background-color: var(--form-bg-dark);
 }
-
 body.light-theme .form-container {
   background-color: var(--form-bg-light);
 }
 
+/* Controles de cabecera */
 .header-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
-
 .theme-toggle {
   background: none;
   border: none;
@@ -62,107 +68,238 @@ body.light-theme .form-container {
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-
 .theme-toggle:hover {
-  transform: rotate(20deg);
+  transform: rotate(20deg) scale(1.1);
 }
 
+/* Filas del formulario */
 .form-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
   align-items: center;
+  transition: all 0.3s ease;
 }
-
 .label-10 {
   flex: 10%;
   text-align: right;
   margin-right: 5px;
+  font-weight: 500;
 }
-
-body.dark-theme .label-10 {
-  color: var(--primary-color-dark);
-}
-
-body.light-theme .label-10 {
-  color: var(--primary-color-light);
-}
-
 .input-35 {
   flex: 35%;
   border: 1px solid #444;
-  border-radius: 5px;
-  padding: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
 }
-
 body.dark-theme .input-35 {
   background-color: var(--input-bg-dark);
-  color: #fff;
+  color: var(--primary-color-dark);
+  border-color: #444;
 }
-
 body.light-theme .input-35 {
   background-color: var(--input-bg-light);
-  color: #333333; /* Cambiado de #111111 a #333333 */
+  color: var(--primary-color-light);
+  border-color: #ddd;
+}
+.input-35:focus {
+  outline: none;
+  border-color: var(--button-hover);
+  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2); /* Naranja */
+}
+.input-35.error {
+  border-color: var(--error-color);
+}
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
+/* Previsualización del logo */
+.logo-preview {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.logo-preview.show {
+  display: block;
+}
+
+/* Botones */
 .form-row.buttons {
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
-
 .button-40 {
   flex: 1;
   max-width: 40%;
+  min-width: 180px;
   background-color: var(--button-bg);
-  color: #fff;
+  color: var(--text-light);
   border: none;
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-.button-40:hover,
-.button-40:focus {
+.button-40:hover {
   background-color: var(--button-hover);
   transform: translateY(-2px);
-  outline: none;
+  box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3); /* Naranja */
+}
+.button-40:active {
+  background-color: var(--button-active);
+  transform: translateY(0);
+}
+.button-40.active {
+  background-color: var(--button-active);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Mensajes de estado */
+.status-message {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+.status-message.show {
+  opacity: 1;
+}
+.status-message.success {
+  background-color: var(--success-color);
+  color: white;
+}
+.status-message.error {
+  background-color: var(--error-color);
+  color: white;
+}
+.status-message.info {
+  background-color: var(--info-color);
+  color: white;
+}
+
+/* Contenedor de la firma */
 .signature-container {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 5px;
+  margin: 25px auto;
+  padding: 20px;
+  border-radius: 10px;
   font-size: 9pt;
   max-width: 315px;
   background-color: var(--signature-bg);
   color: var(--text-dark);
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
 }
-
+.signature-container:not(:empty) {
+  animation: fadeIn 0.5s ease-out;
+}
 .signature-container a {
   color: var(--text-dark);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
-
 .signature-container a:hover {
+  color: var(--button-hover);
   text-decoration: underline;
 }
 
+/* Modal de mensajes */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal-bg);
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.modal.show {
+  display: flex;
+  opacity: 1;
+}
+.modal-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  max-width: 80%;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+#modal-message {
+  margin: 0;
+  font-size: 16px;
+  color: black;
+  text-align: center;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.status-message.auto-hide {
+  animation: fadeOut 3s forwards;
+}
+
+/* Responsive */
 @media (max-width: 767px) {
   .form-container {
     width: 90%;
+    padding: 15px;
   }
   .form-row {
     flex-direction: column;
     align-items: flex-start;
   }
   .label-10,
-  .input-35 {
+  .input-35,
+  .input-group {
     flex: 100%;
+    width: 100%;
     margin: 5px 0;
+    text-align: left;
   }
   .button-40 {
     max-width: 100%;
+    margin: 5px 0;
+    min-width: 100%;
+  }
+  .logo-preview {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .form-container {
+    width: 80%;
   }
 }
