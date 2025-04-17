@@ -4,32 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Carlos Cusi">
-  <meta name="collaboration" content="Grok">
-  <title>Crea tu Firma</title>
+  <meta name="assistant" content="grok,deepseek,chatgpt">
+  <meta name="description" content="Crea tu firma de correo electrónico fácilmente.">
+  <meta name="keywords" content="firma de correo, firma electrónica, plantilla de firma, crear firma">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="images/logo_cip_col.png">
+  <title>Generador de Firma</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
-  <!-- Incluimos html2canvas -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body class="dark-theme">
   <div class="form-container">
     <div class="header-controls">
-      <h2>Crea tu Firma</h2>
-      <button id="theme-toggle" class="theme-toggle">🌙</button>
+      <h2>Generador de Firma</h2>
+      <button id="theme-toggle" class="theme-toggle" title="Cambiar tema">🌙</button>
     </div>
     <div class="form-content">
-      <!-- Campo para cargar el logo con botón para quitar -->
+      <!-- Campo para cargar el logo con previsualización -->
       <div class="form-row">
         <label for="logo-upload" class="label-10">Logo:</label>
-        <input type="file" id="logo-upload" class="input-35" accept="image/*">
-        <label class="label-10"></label>
+        <div class="input-group input-35">
+          <input type="file" id="logo-upload" class="file-input" accept="image/*">
+          <div id="logo-preview" class="logo-preview"></div>
+        </div>
         <button type="button" id="remove-logo" class="button-40">Quitar Logo</button>
       </div>
+      <!-- Campos de información -->
       <div class="form-row">
         <label for="name" class="label-10">Nombre:</label>
-        <input type="text" id="name" class="input-35" placeholder="Ingresa tu Nombre">
+        <input type="text" id="name" class="input-35" placeholder="Ingresa tu Nombre" required>
         <label for="position" class="label-10">Cargo:</label>
-        <input type="text" id="position" class="input-35" placeholder="Ingresa puesto o Área">
+        <input type="text" id="position" class="input-35" placeholder="Ingresa puesto o Área" required>
       </div>
       <div class="form-row">
         <label for="phone" class="label-10">Teléfono:</label>
@@ -66,24 +72,58 @@
         <input type="text" id="tiktok" class="input-35" value="https://www.tiktok.com/@vinifanperu" placeholder="Comparte tu Link">
         <label for="line-color" class="label-10">Color Línea:</label>
         <select id="line-color" class="input-35">
-          <option value="#1f3a44">Gris Azulado</option>
-          <option value="#2e4053" selected>Azul Pizarra</option>
-          <option value="#3e4a3d">Verde Grisáceo</option>
-          <option value="#4a5e6c">Azul Grisáceo</option>
+          <!-- Colores Oscuros -->
+          <option value="#1f3a44" style="background-color:#1f3a44; color:white;">Gris Azulado</option>
+          <option value="#37474f" style="background-color:#37474f; color:white;">Gris Carbón</option>
+          <option value="#000000" style="background-color:#000000; color:white;">Negro</option>
+          <option value="#00225e" style="background-color:#00225e; color:white;" selected>Azul Marino Profundo</option> <!-- Agregado y seleccionado -->
+          <option value="#0277bd" style="background-color:#0277bd; color:white;">Azul Clásico</option>
+          <option value="#2e7d32" style="background-color:#2e7d32; color:white;">Verde Corporativo</option>
+          <option value="#00ACC1" style="background-color:#00ACC1; color:white;">Turquesa</option>
+        
+          <!-- Colores Intermedios -->
+          <option value="#b0c4de" style="background-color:#b0c4de; color:black;">Azul Niebla</option>
+          <option value="#e4a9a8" style="background-color:#e4a9a8; color:black;">Coral Apagado</option>
+          <option value="#9eaf9e" style="background-color:#9eaf9e; color:black;">Verde Salvia</option>
+          <option value="#a39e9e" style="background-color:#a39e9e; color:black;">Gris Topo</option>
+        
+          <!-- Colores Vibrantes -->
+          <option value="#355c7d" style="background-color:#355c7d; color:white;">Azul Petróleo</option>
+          <option value="#673AB7" style="background-color:#673AB7; color:white;">Morado Real</option>
+          <option value="#880E4F" style="background-color:#880E4F; color:white;">Borgoña</option>
+          <option value="#558B2F" style="background-color:#558B2F; color:white;">Verde Oliva</option>
+          <option value="#D32F2F" style="background-color:#D32F2F; color:white;">Rojo Granate</option>
+          <option value="#ef6c00" style="background-color:#ef6c00; color:black;">Naranja Energía</option>
+        
+          <!-- Sugerencias Adicionales -->
+          <option value="#0D47A1" style="background-color:#0D47A1; color:white;">Azul Marino Oscuro</option>
+          <option value="#4527A0" style="background-color:#4527A0; color:white;">Púrpura Oscuro</option>
+          <option value="#1B5E20" style="background-color:#1B5E20; color:white;">Verde Esmeralda Oscuro</option>
+          <option value="#BF360C" style="background-color:#BF360C; color:white;">Naranja Tierra</option>
+          <option value="#263238" style="background-color:#263238; color:white;">Azul Medianoche</option>
         </select>
       </div>
+      <!-- Botones de generación -->
       <div class="form-row buttons">
         <button type="button" data-type="full" class="button-40">Generar Firma Completa</button>
         <button type="button" data-type="medium" class="button-40">Generar Firma Media</button>
         <button type="button" data-type="short" class="button-40">Generar Firma Corta</button>
       </div>
+      <!-- Botones de copiado -->
       <div class="form-row buttons">
-        <button type="button" id="copy-signature" class="button-40">Copiar Firma (Imagen)</button>
-        <button type="button" id="copy-html" class="button-40">Seleccionar para Copiar (HTML)</button>
+        <button type="button" id="copy-html" class="button-40">Copiar Firma (HTML)</button>
+        <button type="button" id="copy-text" class="button-40">Copiar Firma (Texto)</button>
         <button type="button" id="reset-form" class="button-40">Reiniciar</button>
       </div>
     </div>
+    <div id="status-message" class="status-message"></div>
     <div id="signatureOutput" class="signature-container"></div>
+  </div>
+  <!-- Modal para mensajes -->
+  <div id="message-modal" class="modal">
+    <div class="modal-content animate__animated animate__fadeInUp">
+      <p id="modal-message"></p>
+    </div>
   </div>
   <script src="js/script.js"></script>
 </body>
