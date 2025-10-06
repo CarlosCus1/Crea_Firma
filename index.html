@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Carlos Cusi">
+  <meta name="assistant" content="grok,deepseek,chatgpt">
+  <meta name="description" content="Crea tu firma de correo electrónico fácilmente.">
+  <meta name="keywords" content="firma de correo, firma electrónica, plantilla de firma, crear firma">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="images/logo_cip_col.png">
+  <title>Generador de Firma</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body class="dark-theme">
+  <div class="form-container">
+    <div class="header-controls">
+      <h2>Generador de Firma</h2>
+      <button id="theme-toggle" class="theme-toggle" title="Cambiar tema">🌙</button>
+    </div>
+    <form class="form-content">
+      <!-- Campo para cargar el logo con previsualización -->
+      <div class="form-row">
+        <label for="logo-upload" class="label-10">Logo:</label>
+        <div class="input-group input-35">
+          <input type="file" id="logo-upload" class="file-input" accept="image/*">
+          <div id="logo-preview" class="logo-preview"></div>
+        </div>
+        <button type="button" id="remove-logo" class="button-40">Quitar Logo</button>
+      </div>
+      <!-- Campos de información -->
+      <div class="form-row">
+        <label for="name" class="label-10">Nombre:</label>
+        <input type="text" id="name" class="input-35" placeholder="Ingresa tu Nombre" required>
+        <label for="position" class="label-10">Cargo:</label>
+        <input type="text" id="position" class="input-35" placeholder="Ingresa puesto o Área" required>
+      </div>
+      <div class="form-row">
+        <label for="phone" class="label-10">Teléfono:</label>
+        <input type="text" id="phone" class="input-35" placeholder="Ej: 3134200">
+        <label for="extension" class="label-10">Ext.:</label>
+        <input type="text" id="extension" class="input-35" placeholder="Ingresa Anexo">
+      </div>
+      <div class="form-row">
+        <label for="mobile" class="label-10">Móvil:</label>
+        <div class="input-group input-35">
+          <input type="text" id="mobile" class="input-full" placeholder="Ingresa Número Celular">
+          <input type="checkbox" id="add-whatsapp" title="Añadir WhatsApp"> <label for="add-whatsapp">Wsp</label>
+          <input type="checkbox" id="add-telegram" title="Añadir Telegram"> <label for="add-telegram">Tlg</label>
+        </div>
+        <label for="mobile2" class="label-10">Móvil 2:</label>
+        <div class="input-group input-35">
+          <input type="text" id="mobile2" class="input-full" placeholder="Número Alternativo">
+          <input type="checkbox" id="add-whatsapp2" title="Añadir WhatsApp 2"> <label for="add-whatsapp2">Wsp</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="facebook" class="label-10">Facebook:</label>
+        <input type="text" id="facebook" class="input-35" value="https://es-la.facebook.com/vinifan/" placeholder="Comparte tu Link">
+        <label for="instagram" class="label-10">Instagram:</label>
+        <input type="text" id="instagram" class="input-35" value="https://www.instagram.com/vinifanperu/?hl=es-la" placeholder="Comparte tu Link">
+      </div>
+      <div class="form-row">
+        <label for="youtube" class="label-10">YouTube:</label>
+        <input type="text" id="youtube" class="input-35" value="https://www.youtube.com/channel/UC1c_boc4GF8fVC0bHGFNqqQ" placeholder="Comparte tu Link">
+        <label for="tiktok" class="label-10">TikTok:</label>
+        <input type="text" id="tiktok" class="input-35" value="https://www.tiktok.com/@vinifanperu" placeholder="Comparte tu Link">
+      </div>
+      <div class="form-row">
+        <label for="line-color" class="label-10">Color Línea:</label>
+        <select id="line-color" class="input-35">
+          <!-- Paleta de Colores Profesionales Reducida -->
+          <option value="#003366" class="color-option color-deep-blue" selected>Azul Marino</option>
+          <option value="#005792" class="color-option color-ocean-blue">Azul Océano</option>
+          <option value="#00796B" class="color-option color-teal">Verde Azulado</option>
+          <option value="#424242" class="color-option color-charcoal">Gris Carbón</option>
+          <option value="#607D8B" class="color-option color-blue-grey">Gris Azulado</option>
+          <option value="#795548" class="color-option color-brown">Marrón</option>
+        </select>
+      </div>
+      <!-- Botones de generación -->
+      <div class="form-row buttons">
+        <button type="button" data-type="full" class="button-40">Generar Firma Completa</button>
+        <button type="button" data-type="medium" class="button-40">Generar Firma Media</button>
+        <button type="button" data-type="short" class="button-40">Generar Firma Corta</button>
+      </div>
+      <!-- Botones de copiado -->
+      <div class="form-row buttons">
+        <button type="button" id="copy-html" class="button-40">Copiar Firma (HTML)</button>
+        <button type="button" id="copy-text" class="button-40">Copiar Firma (Texto)</button>
+        <button type="button" id="reset-form" class="button-40">Reiniciar</button>
+      </div>
+    </form>
+    <div id="status-message" class="status-message"></div>
+    <div id="signatureOutput" class="signature-container"></div>
+  </div>
+  <!-- Modal para mensajes -->
+  <div id="message-modal" class="modal">
+    <div class="modal-content animate__animated animate__fadeInUp">
+      <p id="modal-message"></p>
+    </div>
+  </div>
+  <script type="module" src="js/script.js"></script>
+</body>
+</html>
