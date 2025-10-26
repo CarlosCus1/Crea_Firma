@@ -21,7 +21,7 @@ export function generateLink(type, value, text, urlTemplate) {
   }
 }
 
-// Convertir imagen a base64 con manejo de errores y redimensionamiento
+// Convertir imagen a base64 con manejo de errores, redimensionamiento y compresión
 export async function fileToBase64(file, maxWidth = 90, maxHeight = 90) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -49,23 +49,29 @@ export async function fileToBase64(file, maxWidth = 90, maxHeight = 90) {
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL(file.type));
+
+        // Optimizar: usar calidad reducida para reducir tamaño
+        let quality = 0.7; // Calidad más baja para mejor compresión
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
+          quality = 0.7;
+        } else if (file.type === 'image/png') {
+          quality = 0.8; // PNG puede mantener mejor calidad
+        }
+        resolve(canvas.toDataURL(file.type, quality));
       };
       img.onerror = (error) => {
-        console.error("Error al cargar la imagen para redimensionar:", error);
         reject(error);
       };
       img.src = event.target.result;
     };
     reader.onerror = (error) => {
-      console.error("Error al leer el archivo:", error);
       reject(error);
     };
     reader.readAsDataURL(file);
   });
 }
 
-// Obtener archivo como Base64 desde una URL (para imágenes locales)
+// Obtener archivo como Base64 desde una URL (para imágenes locales) con compresión
 export async function getFileAsBase64(url) {
   try {
     const response = await fetch(url);
@@ -73,16 +79,60 @@ export async function getFileAsBase64(url) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const blob = await response.blob();
+
+    // Comprimir imagen antes de convertir a base64
     return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Mantener tamaño original pero comprimir calidad
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        // Usar compresión para reducir tamaño
+        const compressedBase64 = canvas.toDataURL('image/png', 0.8);
+        resolve(compressedBase64);
+      };
+      img.onerror = reject;
+
       const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
+      reader.onloadend = () => {
+        img.src = reader.result;
+      };
       reader.onerror = reject;
       reader.readAsDataURL(blob);
     });
   } catch (error) {
-    console.error(`Error al obtener la imagen ${url}:`, error);
     return null; // Retorna null en caso de error
   }
+}
+
+// Convertir SVG string a PNG base64 para mejor compatibilidad con compresión
+export function svgToPngBase64(svgString, width = 90, height = 90) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = width;
+    canvas.height = height;
+
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, width, height);
+      // Usar compresión para reducir tamaño
+      resolve(canvas.toDataURL('image/png', 0.8));
+    };
+
+    img.onerror = reject;
+
+    // Crear una URL de datos para el SVG
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+    img.src = url;
+  });
 }
 
 // Mostrar mensaje temporal utilizando el elemento #status-message

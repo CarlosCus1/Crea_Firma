@@ -34,16 +34,9 @@ export async function loadStaticImagesToBase64() {
   }
 }
 
-// Toggle de tema
+// Toggle de tema (removido por no funcionar)
 export function setupThemeToggle() {
-  const themeToggle = document.getElementById("theme-toggle");
-  themeToggle.textContent = document.body.classList.contains("dark-theme") ? "🌙" : "☀️";
-
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-theme");
-    document.body.classList.toggle("light-theme");
-    themeToggle.textContent = document.body.classList.contains("dark-theme") ? "🌙" : "☀️";
-  });
+  // Función vacía - toggle removido del HTML
 }
 
 // Generar firma según tipo
@@ -78,10 +71,31 @@ export async function setupCopyHTML() {
     }
 
     try {
-      const blob = new Blob([signatureHTML], { type: 'text/html' });
-      const clipboardItem = new ClipboardItem({ 'text/html': blob });
-      await navigator.clipboard.write([clipboardItem]);
-      showMessage("Firma copiada como HTML al portapapeles.", "success");
+      // Intentar usar ClipboardItem para navegadores modernos
+      if (navigator.clipboard && window.ClipboardItem) {
+        const blob = new Blob([signatureHTML], { type: 'text/html' });
+        const clipboardItem = new ClipboardItem({ 'text/html': blob });
+        await navigator.clipboard.write([clipboardItem]);
+        showMessage("Firma copiada como HTML al portapapeles.", "success");
+      } else {
+        // Fallback para navegadores que no soportan ClipboardItem
+        const textArea = document.createElement("textarea");
+        textArea.value = signatureHTML;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          showMessage("Firma copiada como HTML al portapapeles.", "success");
+        } catch (err) {
+          console.error("Error en fallback de copiado:", err);
+          showMessage("Error al copiar la firma. Intenta manualmente.", "error");
+        }
+        document.body.removeChild(textArea);
+      }
     } catch (error) {
       console.error("Error al copiar HTML:", error);
       showMessage("Error al copiar la firma. Tu navegador podría no ser compatible.", "error");
@@ -99,6 +113,10 @@ export function setupCopyText() {
       extension: document.getElementById("extension").value.trim(),
       mobile: document.getElementById("mobile").value.trim(),
       mobile2: document.getElementById("mobile2").value.trim(),
+      facebook: document.getElementById("facebook").value.trim(),
+      instagram: document.getElementById("instagram").value.trim(),
+      youtube: document.getElementById("youtube").value.trim(),
+      tiktok: document.getElementById("tiktok").value.trim(),
     };
 
     if (!fields.name && !fields.position) {
@@ -124,9 +142,20 @@ export function setupCopyText() {
       textToCopy += `Celular 2: ${fields.mobile2}\n`;
     }
 
+    // Agregar redes sociales si están presentes
+    const socialLinks = [];
+    if (fields.facebook) socialLinks.push(`Facebook: ${fields.facebook}`);
+    if (fields.instagram) socialLinks.push(`Instagram: ${fields.instagram}`);
+    if (fields.youtube) socialLinks.push(`YouTube: ${fields.youtube}`);
+    if (fields.tiktok) socialLinks.push(`TikTok: ${fields.tiktok}`);
+
+    if (socialLinks.length > 0) {
+      textToCopy += "\nRedes Sociales:\n" + socialLinks.join("\n");
+    }
+
     navigator.clipboard.writeText(textToCopy.trim())
       .then(() => {
-        showMessage("Información esencial copiada al portapapeles", "success");
+        showMessage("Información completa copiada al portapapeles", "success");
       })
       .catch(err => {
         console.error("Error al copiar texto:", err);
@@ -135,18 +164,21 @@ export function setupCopyText() {
   });
 }
 
-// Quitar logo
+// Quitar logo (si existe)
 export function setupRemoveLogo() {
-  document.getElementById("remove-logo").addEventListener("click", () => {
-    const logoInput = document.getElementById("logo-upload");
-    logoInput.value = "";
-    logoInput.dataset.removed = "true";
-    document.getElementById("logo-preview").style.display = "none";
-    const activeButton = document.querySelector('.button-40[data-type].active');
-    if (activeButton) {
-      generateSignature(activeButton.dataset.type, config);
-    }
-  });
+  const removeButton = document.getElementById("remove-logo");
+  if (removeButton) {
+    removeButton.addEventListener("click", async () => {
+      const logoInput = document.getElementById("logo-upload");
+      logoInput.value = "";
+      logoInput.dataset.removed = "true";
+      document.getElementById("logo-preview").style.display = "none";
+      const activeButton = document.querySelector('.button-40[data-type].active');
+      if (activeButton) {
+        await generateSignature(activeButton.dataset.type, config);
+      }
+    });
+  }
 }
 
 // Persistencia de datos en localStorage
@@ -158,15 +190,19 @@ export function saveFormData() {
     extension: document.getElementById("extension").value,
     mobile: document.getElementById("mobile").value,
     mobile2: document.getElementById("mobile2").value,
-    addWhatsapp: document.getElementById("add-whatsapp").checked,
-    addWhatsapp2: document.getElementById("add-whatsapp2").checked,
-    addTelegram: document.getElementById("add-telegram").checked,
+    "add-whatsapp": document.getElementById("add-whatsapp").checked,
+    "add-whatsapp2": document.getElementById("add-whatsapp2").checked,
+    "add-telegram": document.getElementById("add-telegram").checked,
     facebook: document.getElementById("facebook").value,
     instagram: document.getElementById("instagram").value,
     youtube: document.getElementById("youtube").value,
     tiktok: document.getElementById("tiktok").value,
-    lineColor: document.getElementById("line-color").value,
+    "line-color": document.getElementById("line-color").value,
+    "line-width": document.getElementById("line-width").value,
+    "logo-type": document.getElementById("logo-type").value,
+    "logo-color": document.getElementById("logo-color").value,
   };
+
   localStorage.setItem('signatureFormData', JSON.stringify(formData));
 }
 
@@ -182,8 +218,55 @@ export function loadFormData() {
         } else {
           element.value = formData[key];
         }
+      } else {
+        console.warn(`Elemento con ID "${key}" no encontrado para cargar datos.`);
       }
     });
+  }
+}
+
+// Actualizar previsualización del SVG en vivo
+export async function updateSvgPreview() {
+  const logoType = document.getElementById("logo-type").value;
+  const logoColor = document.getElementById("logo-color").value;
+
+  // Log de valores seleccionados
+  console.log(`Tipo de Logo: ${logoType}, Color Logo: ${logoColor}`);
+
+  const { generateSvgHTML1, generateSvgHTML2 } = await import('./generator.js');
+  let svgHTML;
+  if (logoType === 'logo1') {
+    svgHTML = generateSvgHTML1(logoColor);
+  } else if (logoType === 'logo2') {
+    svgHTML = generateSvgHTML2(logoColor);
+  } else {
+    svgHTML = '';
+  }
+
+  const previewElement = document.getElementById("svg-preview");
+  if (previewElement) {
+    previewElement.innerHTML = svgHTML;
+    if (svgHTML) {
+      previewElement.classList.add("show");
+    } else {
+      previewElement.classList.remove("show");
+    }
+  }
+}
+
+// Función para loggear el color de línea
+export function logLineColor() {
+  const lineColor = document.getElementById("line-color").value;
+  console.log(`Color Línea: ${lineColor}`);
+}
+
+// Actualizar display del ancho de línea
+export function updateLineWidthDisplay() {
+  const slider = document.getElementById("line-width");
+  const display = document.getElementById("line-width-value");
+  if (slider && display) {
+    display.textContent = slider.value + "px";
+    console.log(`Ancho Línea Actualizado: ${slider.value}px`);
   }
 }
 
@@ -192,11 +275,34 @@ export function loadFormData() {
 export function setupResetForm() {
   document.getElementById("reset-form").addEventListener("click", () => {
     document.querySelector(".form-content").closest('form').reset();
-    document.getElementById("line-color").value = config.defaultLineColor;
+    const lineColorPicker = document.getElementById("line-color");
+    if (lineColorPicker) {
+      lineColorPicker.value = config.defaultLineColor;
+    }
+    const lineWidthSlider = document.getElementById("line-width");
+    if (lineWidthSlider) {
+      lineWidthSlider.value = "4";
+    }
+    const logoTypeSelect = document.getElementById("logo-type");
+    if (logoTypeSelect) {
+      logoTypeSelect.value = "logo1";
+    }
+    const logoColorPicker = document.getElementById("logo-color");
+    if (logoColorPicker) {
+      logoColorPicker.value = "#FF0000";
+    }
     const logoInput = document.getElementById("logo-upload");
-    logoInput.dataset.removed = "false";
-    document.getElementById("logo-preview").style.display = "none";
-    document.getElementById("signatureOutput").innerHTML = "";
+    if (logoInput) {
+      logoInput.dataset.removed = "false";
+    }
+    const logoPreview = document.getElementById("logo-preview");
+    if (logoPreview) {
+      logoPreview.style.display = "none";
+    }
+    const signatureOutput = document.getElementById("signatureOutput");
+    if (signatureOutput) {
+      signatureOutput.innerHTML = "";
+    }
     localStorage.removeItem('signatureFormData'); // Limpiar datos guardados
   });
 }
@@ -205,15 +311,58 @@ export function setupResetForm() {
 document.addEventListener("DOMContentLoaded", async () => {
   await loadStaticImagesToBase64();
   loadFormData();
-  setupThemeToggle();
+  // setupThemeToggle(); // Removido: toggle de tema no funciona
   setupSignatureGeneration();
   setupCopyHTML();
   setupCopyText();
   setupRemoveLogo();
   setupResetForm();
 
+  // Configurar previsualización del SVG si los elementos existen
+  const logoTypeSelect = document.getElementById("logo-type");
+  const logoColorPicker = document.getElementById("logo-color");
+  if (logoTypeSelect && logoColorPicker) {
+    await updateSvgPreview();
+
+    // Eventos para actualizar previsualización en vivo
+    logoTypeSelect.addEventListener('change', async () => {
+      console.log(`Tipo de Logo Cambiado: ${logoTypeSelect.value}`);
+      await updateSvgPreview();
+    });
+    logoColorPicker.addEventListener('input', async () => {
+      console.log(`Color Logo Cambiado: ${logoColorPicker.value}`);
+      await updateSvgPreview();
+    });
+  }
+
+  // Configurar slider de línea
+  const lineWidthSlider = document.getElementById("line-width");
+  if (lineWidthSlider) {
+    updateLineWidthDisplay();
+    lineWidthSlider.addEventListener('input', async () => {
+      updateLineWidthDisplay();
+      // Regenerar firma si está activa
+      const activeButton = document.querySelector('.button-40[data-type].active');
+      if (activeButton) {
+        await generateSignature(activeButton.dataset.type, config);
+      }
+    });
+  }
+
   // Guardar datos en cada cambio
   document.querySelectorAll('input, select').forEach(input => {
-    input.addEventListener('input', saveFormData);
+    const eventType = input.tagName === 'SELECT' ? 'change' : 'input';
+    input.addEventListener(eventType, () => {
+      if (input.id === 'line-color') {
+        console.log(`Color Línea Cambiado: ${input.value}`);
+      }
+      saveFormData();
+    });
   });
+
+  // Agregar log específico para el color de línea
+  const lineColorPicker = document.getElementById("line-color");
+  if (lineColorPicker) {
+    lineColorPicker.addEventListener('input', logLineColor);
+  }
 });

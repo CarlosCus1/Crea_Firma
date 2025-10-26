@@ -20,6 +20,7 @@
   --text-dark: #212121; /* Color de texto oscuro para la firma (contraste alto) */
   --text-light: #FFFFFF; /* Color de texto claro para botones */
   --modal-bg: rgba(0, 0, 0, 0.8); /* Fondo de modal (más opaco) */
+  --input-border-color: #444; /* Borde de inputs por defecto */
 
   /* Colores de línea de la firma (sugerencias para bordes suaves y claros) */
   --line-color-soft-blue: #A7D9F0; /* Azul suave y claro */
@@ -82,6 +83,10 @@ body.dark-theme .header-controls h2 {
   font-size: 24px;
   cursor: pointer;
   transition: transform 0.3s ease;
+  color: var(--primary-color-light);
+}
+body.dark-theme .theme-toggle {
+  color: var(--primary-color-dark);
 }
 .theme-toggle:hover {
   transform: rotate(20deg) scale(1.1);
@@ -100,27 +105,29 @@ body.dark-theme .header-controls h2 {
   text-align: right;
   margin-right: 5px;
   font-weight: 500;
-  color: var(--primary-color-light);
+  color: var(--primary-color-light, #212121);
 }
 body.dark-theme .label-10 {
-  color: var(--primary-color-dark);
+  color: var(--primary-color-dark, #e0e0e0);
 }
 .input-35 {
   flex: 35%;
-  border: 1px solid #444;
+  border: 1px solid var(--input-border-color, #444);
   border-radius: 8px;
   padding: 8px 12px;
   transition: all 0.3s ease;
+  background-color: var(--input-bg-light, #ffffff);
+  color: var(--primary-color-light, #212121);
 }
 body.dark-theme .input-35 {
-  background-color: var(--input-bg-dark);
-  color: var(--primary-color-dark);
-  border-color: #444;
+  background-color: var(--input-bg-dark, #424242);
+  color: var(--primary-color-dark, #e0e0e0);
+  border-color: var(--input-border-color, #444);
 }
 body.light-theme .input-35 {
-  background-color: var(--input-bg-light);
-  color: var(--primary-color-light);
-  border-color: #ddd;
+  background-color: var(--input-bg-light, #ffffff);
+  color: var(--primary-color-light, #212121);
+  --input-border-color: #ddd;
 }
 .input-35:focus {
   outline: none;
@@ -156,8 +163,8 @@ body.light-theme .input-35 {
 
 /* Previsualización del logo */
 .logo-preview {
-  width: 50px;
-  height: 50px;
+  width: 90px;
+  height: 90px;
   margin-left: 10px;
   border-radius: 8px;
   overflow: hidden;
@@ -165,13 +172,41 @@ body.light-theme .input-35 {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #f0f0f0;
-  border: 1px dashed #ccc;
+  background-color: var(--input-bg-light, #f0f0f0);
+  border: 1px dashed var(--input-border-color, #ccc);
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+body.dark-theme .logo-preview {
+  background-color: var(--input-bg-dark, #424242);
+  border-color: var(--input-border-color, #444);
+}
 .logo-preview.show {
   display: block;
+}
+
+/* Estilos para color pickers y slider */
+.color-picker {
+  cursor: pointer;
+  border: 1px solid var(--input-border-color, #ddd);
+  border-radius: 4px;
+  padding: 2px;
+  background-color: var(--input-bg-light, #ffffff);
+}
+body.dark-theme .color-picker {
+  background-color: var(--input-bg-dark, #424242);
+  border-color: var(--input-border-color, #444);
+}
+.slider {
+  cursor: pointer;
+}
+.value-display {
+  margin-left: 10px;
+  font-weight: bold;
+  color: var(--primary-color-light);
+}
+body.dark-theme .value-display {
+  color: var(--primary-color-dark);
 }
 
 /* Custom Select Style */
@@ -498,6 +533,8 @@ body.dark-theme #modal-message {
     min-width: 100%;
   }
   .logo-preview {
+    width: 90px;
+    height: 90px;
     margin-top: 10px;
     margin-left: 0;
   }

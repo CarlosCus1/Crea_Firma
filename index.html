@@ -18,17 +18,34 @@
   <div class="form-container">
     <div class="header-controls">
       <h2>Generador de Firma</h2>
-      <button id="theme-toggle" class="theme-toggle" title="Cambiar tema">🌙</button>
     </div>
     <form class="form-content">
       <!-- Campo para cargar el logo con previsualización -->
       <div class="form-row">
-        <label for="logo-upload" class="label-10">Logo:</label>
+        <label for="logo-upload" class="label-10">Subir Logo:</label>
         <div class="input-group input-35">
-          <input type="file" id="logo-upload" class="file-input" accept="image/*">
-          <div id="logo-preview" class="logo-preview"></div>
+          <input type="file" id="logo-upload" class="file-input" accept="image/*" aria-label="Seleccionar archivo de imagen para el logo">
+          <div id="logo-preview" class="logo-preview" role="img" aria-label="Previsualización del logo subido"></div>
         </div>
-        <button type="button" id="remove-logo" class="button-40">Quitar Logo</button>
+      </div>
+      <!-- Selector de Logo -->
+      <div class="form-row">
+        <label for="logo-type" class="label-10">Tipo de Logo:</label>
+        <select id="logo-type" class="input-35" aria-label="Seleccionar tipo de logo">
+          <option value="logo1" selected>Logo 1 (Relleno)</option>
+          <option value="logo2">Logo 2 (Contorno)</option>
+          <option value="none">Sin Logo</option>
+          <option value="upload">Subir Imagen</option>
+        </select>
+        <label for="logo-color" class="label-10">Color Logo:</label>
+        <input type="color" id="logo-color" class="input-35 color-picker" value="#FF0000" title="Selecciona el color del logo" aria-label="Selector de color para el logo">
+      </div>
+      <div class="form-row">
+        <label for="line-color" class="label-10">Color Línea:</label>
+        <input type="color" id="line-color" class="input-35 color-picker" value="#003366" title="Selecciona el color de la línea vertical">
+        <label for="line-width" class="label-10">Ancho Línea:</label>
+        <input type="range" id="line-width" class="input-35 slider" min="1" max="10" value="4" step="1">
+        <span id="line-width-value" class="value-display">4px</span>
       </div>
       <!-- Campos de información -->
       <div class="form-row">
@@ -67,18 +84,6 @@
         <input type="text" id="youtube" class="input-35" value="https://www.youtube.com/channel/UC1c_boc4GF8fVC0bHGFNqqQ" placeholder="Comparte tu Link">
         <label for="tiktok" class="label-10">TikTok:</label>
         <input type="text" id="tiktok" class="input-35" value="https://www.tiktok.com/@vinifanperu" placeholder="Comparte tu Link">
-      </div>
-      <div class="form-row">
-        <label for="line-color" class="label-10">Color Línea:</label>
-        <select id="line-color" class="input-35">
-          <!-- Paleta de Colores Profesionales Reducida -->
-          <option value="#003366" class="color-option color-deep-blue" selected>Azul Marino</option>
-          <option value="#005792" class="color-option color-ocean-blue">Azul Océano</option>
-          <option value="#00796B" class="color-option color-teal">Verde Azulado</option>
-          <option value="#424242" class="color-option color-charcoal">Gris Carbón</option>
-          <option value="#607D8B" class="color-option color-blue-grey">Gris Azulado</option>
-          <option value="#795548" class="color-option color-brown">Marrón</option>
-        </select>
       </div>
       <!-- Botones de generación -->
       <div class="form-row buttons">
