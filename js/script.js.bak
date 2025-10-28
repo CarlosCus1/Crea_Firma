@@ -98,17 +98,17 @@ async function generateSignature(type) {
   const mobileHTML = fields.mobile
     ? `Celular: ${generateLink("tel", fields.mobile, fields.mobile, "tel:+51{value}")}`
         + (fields.whatsapp
-            ? ` <a href="https://api.whatsapp.com/send?phone=+51${fields.mobile.replace(/\D/g, "")}&text=Hola,%20${encodeURIComponent(fields.name)}%20solicito%20informes%20sobre%20productos" style="text-decoration: none; margin-left: 5px; display: inline-block;"><img src="images/whatsapp.png" alt="Whatsapp" style="width: 16px; vertical-align: middle;"></a> `
+            ? ` <a href="https://api.whatsapp.com/send?phone=+51${fields.mobile.replace(/\D/g, "")}&text=Hola,%20${encodeURIComponent(fields.name)}%20solicito%20informes%20sobre%20productos" style="text-decoration: none; margin-left: 5px; display: inline-block;"><img src="images/whatsapp.svg" alt="Whatsapp" style="width: 16px; vertical-align: middle;"></a> `
             : "")
         + (fields.telegram
-            ? `<a href="https://t.me/+51${fields.mobile.replace(/\D/g, "")}?text=Hola,%20${encodeURIComponent(fields.name)}%20solicito%20informes%20sobre%20productos" style="text-decoration: none; margin-left: 5px; display: inline-block;"><img src="images/telegram.png" alt="Telegram" style="width: 16px; vertical-align: middle;"></a>`
+            ? `<a href="https://t.me/+51${fields.mobile.replace(/\D/g, "")}?text=Hola,%20${encodeURIComponent(fields.name)}%20solicito%20informes%20sobre%20productos" style="text-decoration: none; margin-left: 5px; display: inline-block;"><img src="images/telegram.svg" alt="Telegram" style="width: 16px; vertical-align: middle;"></a>`
             : "")
     : "";
 
   const mobile2HTML = fields.mobile2
     ? `Celular 2: ${generateLink("tel", fields.mobile2, fields.mobile2, "tel:+51{value}")}`
         + (fields.whatsapp2
-            ? ` <a href="https://api.whatsapp.com/send?phone=+51${fields.mobile2.replace(/\D/g, "")}&text=Hola,%20${encodeURIComponent(fields.name)}%20solicito%20informes%20sobre%20productos" style="text-decoration: none; margin-left: 5px; display: inline-block;"><img src="images/whatsapp.png" alt="Whatsapp 2" style="width: 16px; vertical-align: middle;"></a> `
+            ? ` <a href="https://api.whatsapp.com/send?phone=+51${fields.mobile2.replace(/\D/g, "")}&text=Hola,%20${encodeURIComponent(fields.name)}%20solicito%20informes%20sobre%20productos" style="text-decoration: none; margin-left: 5px; display: inline-block;"><img src="images/whatsapp.svg" alt="Whatsapp 2" style="width: 16px; vertical-align: middle;"></a> `
             : "")
     : "";
 
@@ -119,12 +119,12 @@ async function generateSignature(type) {
               <td colspan="${fields.logo ? 2 : 1}" style="padding: 6px 0; background-color: transparent;">
                   <div style="display: flex; justify-content: flex-start; width: 50%;">
                       <a href="https://maps.app.goo.gl/5gHmxXAgRGwDr5jk6" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;">
-                          <img src="images/ubicacion.png" alt="Ubicación" style="width: 20px; vertical-align: middle;">
+                          <img src="images/ubicacion.svg" alt="Ubicación" style="width: 20px; vertical-align: middle;">
                       </a>
-                      ${fields.facebook ? `<a href="${fields.facebook}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/facebook.png" alt="Facebook" style="width: 20px; vertical-align: middle;"></a>` : ""}
-                      ${fields.instagram ? `<a href="${fields.instagram}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/instagram.png" alt="Instagram" style="width: 20px; vertical-align: middle;"></a>` : ""}
-                      ${fields.youtube ? `<a href="${fields.youtube}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/youtube.png" alt="YouTube" style="width: 20px; vertical-align: middle;"></a>` : ""}
-                      ${fields.tiktok ? `<a href="${fields.tiktok}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/tiktok.png" alt="TikTok" style="width: 20px; vertical-align: middle;"></a>` : ""}
+                      ${fields.facebook ? `<a href="${fields.facebook}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/facebook.svg" alt="Facebook" style="width: 20px; vertical-align: middle;"></a>` : ""}
+                      ${fields.instagram ? `<a href="${fields.instagram}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/instagram.svg" alt="Instagram" style="width: 20px; vertical-align: middle;"></a>` : ""}
+                      ${fields.youtube ? `<a href="${fields.youtube}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/youtube.svg" alt="YouTube" style="width: 20px; vertical-align: middle;"></a>` : ""}
+                      ${fields.tiktok ? `<a href="${fields.tiktok}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 10px;"><img src="images/tiktok.svg" alt="TikTok" style="width: 20px; vertical-align: middle;"></a>` : ""}
                   </div>
               </td>
           </tr>
