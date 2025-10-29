@@ -1,4 +1,4 @@
-/* Variables globales */
+/* Variables globales - Versión 3.0 */
 :root {
   /* Colores de la interfaz con alto contraste WCAG AA */
   --primary-color-dark: #E0E0E0; /* Gris claro para texto en tema oscuro (contraste alto) */
@@ -48,13 +48,29 @@ body.light-theme {
 
 /* Contenedor del formulario */
 .form-container {
-  width: 60%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  width: 49.5%;
+  max-width: 715px;
+  margin: 30px auto;
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Sección del formulario */
+.form-section {
+  flex: 1;
+}
+
+/* Sección de resultados */
+.result-section {
+  flex: 1;
 }
 body.dark-theme .form-container {
   background-color: var(--form-bg-dark);
@@ -66,9 +82,13 @@ body.light-theme .form-container {
 /* Controles de cabecera */
 .header-controls {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-bottom: 3px solid rgba(0, 121, 107, 0.4);
+  background: linear-gradient(135deg, rgba(0, 121, 107, 0.1), rgba(0, 121, 107, 0.05));
+  border-radius: 15px 15px 0 0;
 }
 .header-controls h2 {
   color: var(--primary-color-light);
@@ -96,9 +116,33 @@ body.dark-theme .theme-toggle {
 .form-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
   align-items: center;
   transition: all 0.3s ease;
+  padding: 12px 15px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.form-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(0, 121, 107, 0.3);
+}
+.form-row:last-child {
+  margin-bottom: 25px;
+}
+
+/* Campos principales de datos personales */
+.form-row.data-fields {
+  background: linear-gradient(135deg, rgba(0, 121, 107, 0.05), rgba(0, 121, 107, 0.02));
+  border: 2px solid rgba(0, 121, 107, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 121, 107, 0.1);
+}
+.form-row.data-fields:hover {
+  background: linear-gradient(135deg, rgba(0, 121, 107, 0.08), rgba(0, 121, 107, 0.04));
+  border-color: rgba(0, 121, 107, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 121, 107, 0.15);
 }
 .label-10 {
   flex: 10%;
@@ -112,12 +156,14 @@ body.dark-theme .label-10 {
 }
 .input-35 {
   flex: 35%;
-  border: 1px solid var(--input-border-color, #444);
-  border-radius: 8px;
-  padding: 8px 12px;
+  border: 2px solid var(--input-border-color, #444);
+  border-radius: 10px;
+  padding: 10px 14px;
   transition: all 0.3s ease;
   background-color: var(--input-bg-light, #ffffff);
   color: var(--primary-color-light, #212121);
+  font-size: 14px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 body.dark-theme .input-35 {
   background-color: var(--input-bg-dark, #424242);
@@ -132,7 +178,8 @@ body.light-theme .input-35 {
 .input-35:focus {
   outline: none;
   border-color: var(--button-hover);
-  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); /* Verde Azulado */
+  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
 }
 .input-35.error {
   border-color: var(--error-color);
@@ -142,6 +189,17 @@ body.light-theme .input-35 {
   display: flex;
   align-items: center;
   flex: 35%; /* Make it take the same space as input-35 */
+  border: 2px solid var(--input-border-color, #444);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+  background-color: var(--input-bg-light, #ffffff);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.input-group:focus-within {
+  border-color: var(--button-hover);
+  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
 }
 
 .input-group .input-full {
@@ -151,6 +209,8 @@ body.light-theme .input-35 {
   padding: 0;
   margin: 0;
   outline: none;
+  font-size: 14px;
+  color: var(--primary-color-light, #212121);
 }
 
 .input-group input[type="checkbox"] {
@@ -188,10 +248,16 @@ body.dark-theme .logo-preview {
 /* Estilos para color pickers y slider */
 .color-picker {
   cursor: pointer;
-  border: 1px solid var(--input-border-color, #ddd);
-  border-radius: 4px;
-  padding: 2px;
+  border: 2px solid var(--input-border-color, #ddd);
+  border-radius: 8px;
+  padding: 4px;
   background-color: var(--input-bg-light, #ffffff);
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.color-picker:hover {
+  border-color: var(--button-hover);
+  transform: scale(1.05);
 }
 body.dark-theme .color-picker {
   background-color: var(--input-bg-dark, #424242);
@@ -199,6 +265,38 @@ body.dark-theme .color-picker {
 }
 .slider {
   cursor: pointer;
+  background: var(--input-bg-light, #ffffff);
+  border: 2px solid var(--input-border-color, #444);
+  border-radius: 8px;
+  height: 6px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--button-bg);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.slider::-webkit-slider-thumb:hover {
+  background: var(--button-hover);
+  transform: scale(1.1);
+}
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--button-bg);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .value-display {
   margin-left: 10px;
@@ -226,9 +324,15 @@ body.dark-theme select.input-35 {
 /* Botones */
 .form-row.buttons {
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
   flex-wrap: wrap;
   margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 15px 20px;
+  border-top: 2px solid rgba(0, 121, 107, 0.2);
+  border-bottom: none;
+  background: linear-gradient(135deg, rgba(0, 121, 107, 0.05), rgba(0, 121, 107, 0.02));
+  border-radius: 0 0 10px 10px;
 }
 .button-40 {
   flex: 1;
@@ -260,8 +364,9 @@ body.dark-theme select.input-35 {
 
 /* Mensajes de estado */
 .status-message {
-  margin-top: 15px;
-  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 8px;
   border-radius: 8px;
   text-align: center;
   opacity: 0;
@@ -286,15 +391,16 @@ body.dark-theme select.input-35 {
 
 /* Contenedor de la firma */
 .signature-container {
-  margin: 25px auto;
-  padding: 20px;
-  border-radius: 10px;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 12px;
   font-size: 9pt;
-  max-width: 315px;
+  max-width: 320px;
   background-color: var(--signature-bg);
   color: var(--text-dark);
   transition: all 0.3s ease;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 body.dark-theme .signature-container {
   background-color: var(--form-bg-dark);
@@ -513,6 +619,11 @@ body.dark-theme #modal-message {
   .form-container {
     width: 90%;
     padding: 15px;
+    flex-direction: column;
+  }
+  .form-section,
+  .result-section {
+    flex: none;
   }
   .form-row {
     flex-direction: column;

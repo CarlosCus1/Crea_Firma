@@ -20,6 +20,7 @@ export function getFormValues() {
     lineWidth: parseInt(document.getElementById("line-width").value),
     logoType: document.getElementById("logo-type").value,
     logoColor: document.getElementById("logo-color").value,
+    socialIconColor: document.getElementById("social-icon-color").value,
     logo: "images/logo_cip.png", // Logo por defecto
   };
 }
@@ -110,10 +111,10 @@ export function generatePhoneHTML(phone, extension) {
 export function generateMobileHTML(mobile, addWhatsapp, addTelegram, name, config) {
   if (!mobile) return "";
   const whatsappIcon = addWhatsapp
-    ? `<a href="https://api.whatsapp.com/send?phone=+51${mobile.replace(/\D/g, "")}&text=Hola,%20${encodeURIComponent(name)}%20solicito%20informes%20sobre%20productos" target="_blank" rel="noopener" style="text-decoration: none; margin-left: 5px;"><img src="${config.base64Images.whatsapp}" alt="Whatsapp" width="20" height="20" style="vertical-align: middle; border: none; outline: none; text-decoration: none;"></a>`
+    ? `<a href="https://api.whatsapp.com/send?phone=+51${mobile.replace(/\D/g, "")}&text=Hola,%20soy%20${encodeURIComponent(name)}.%20Me%20gustaría%20solicitar%20informes%20sobre%20sus%20productos%20y%20servicios." target="_blank" rel="noopener" style="text-decoration: none; margin-left: 5px;"><img src="${config.base64Images.whatsapp}" alt="Whatsapp" width="20" height="20" style="vertical-align: middle; border: none; outline: none; text-decoration: none;"></a>`
     : "";
   const telegramIcon = addTelegram
-    ? `<a href="https://t.me/+51${mobile.replace(/\D/g, "")}" target="_blank" rel="noopener" style="text-decoration: none; margin-left: 5px;"><img src="${config.base64Images.telegram}" alt="Telegram" width="20" height="20" style="vertical-align: middle; border: none; outline: none; text-decoration: none;"></a>`
+    ? `<a href="https://t.me/+51${mobile.replace(/\D/g, "")}?text=Hola,%20soy%20${encodeURIComponent(name)}.%20Me%20gustaría%20solicitar%20informes%20sobre%20sus%20productos%20y%20servicios." target="_blank" rel="noopener" style="text-decoration: none; margin-left: 5px;"><img src="${config.base64Images.telegram}" alt="Telegram" width="20" height="20" style="vertical-align: middle; border: none; outline: none; text-decoration: none;"></a>`
     : "";
   return `<p style="margin: 5px 0 3px; color: #333333; font-size: 9pt; background-color: transparent;">Celular: <a href="tel:+51${mobile.replace(/\D/g, "")}" style="color: #333333; text-decoration: none;">${mobile}</a>${whatsappIcon}${telegramIcon}</p>`;
 }
@@ -131,12 +132,24 @@ export function generateSocialHTML(fields, type, config) {
 
   const socialIcons = socialLinks
     .filter(link => link.href)
-    .map(link => `<a href="${link.href}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 5px; display: inline-block;"><img src="${config.base64Images[link.imgKey]}" alt="${link.alt}" width="20" height="20" style="vertical-align: middle; border: none; outline: none; text-decoration: none;"></a>`)
+    .map(link => {
+      let imgKey = link.imgKey;
+      if (fields.socialIconColor === "original") {
+        imgKey = link.imgKey;
+      } else if (fields.socialIconColor === "mono") {
+        imgKey = `${link.imgKey}_mono`;
+      } else if (fields.socialIconColor === "blue") {
+        imgKey = `${link.imgKey}_blue`;
+      } else if (fields.socialIconColor === "red") {
+        imgKey = `${link.imgKey}_red`;
+      }
+      return `<a href="${link.href}" target="_blank" rel="noopener" style="text-decoration: none; margin-right: 5px; display: inline-block;"><img src="${config.base64Images[imgKey]}" alt="${link.alt}" width="20" height="20" style="vertical-align: middle; border: none; outline: none; text-decoration: none;"></a>`;
+    })
     .join("");
 
   return `
         <tr>
-            <td colspan="${fields.logo ? 2 : 1}" style="padding: 6px 0; background-color: transparent;">
+            <td colspan="${fields.logo ? 2 : 1}" style="padding: 3px 0; background-color: transparent;">
                 <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; background-color: transparent;">
                     <tr>
                         <td style="text-align: left; background-color: transparent;">
@@ -157,10 +170,11 @@ export function generateBannerHTML(type, logo, config) {
 }
 
 // Generar HTML del mensaje eco
-export function generateEcoHTML(logo, config) {
+export function generateEcoHTML(type, logo, config) {
+  const paddingTop = type === "short" ? "5px" : "0px";
   return `
   <tr>
-      <td colspan="${logo ? 2 : 1}" style="background-color: transparent; padding-top: 8px;">
+      <td colspan="${logo ? 2 : 1}" style="background-color: transparent; padding-top: ${paddingTop};">
           <p style="margin: 0; font-size: 8pt; font-style: italic; color: #0b7935; background-color: transparent; text-align: left; line-height: 1.2;">
               Think of the environment before printing this email.
               <img src="${config.base64Images.eco}" alt="Eco icon" width="16" height="16" style="vertical-align: middle; margin-left: 4px; border: none; outline: none; text-decoration: none;">
@@ -194,7 +208,7 @@ export async function generateSignature(type, config) {
 
   const socialHTML = generateSocialHTML(fields, type, config);
   const bannerHTML = generateBannerHTML(type, fields.logo, config);
-  const ecoHTML = generateEcoHTML(fields.logo, config);
+  const ecoHTML = generateEcoHTML(type, fields.logo, config);
 
   const logoHTML = await generateLogoHTML(fields.logo, config, fields);
 

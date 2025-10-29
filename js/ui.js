@@ -7,12 +7,33 @@ export const config = {
   defaultLogo: "images/logo_cip.png",
   socialIcons: {
     ubicacion: "images/ubicacion.svg",
+    ubicacion_mono: "images/ubicacion_mono.svg",
+    ubicacion_blue: "images/ubicacion_blue.svg",
+    ubicacion_red: "images/ubicacion_red.svg",
     facebook: "images/facebook.svg",
+    facebook_mono: "images/facebook_mono.svg",
+    facebook_blue: "images/facebook_blue.svg",
+    facebook_red: "images/facebook_red.svg",
     instagram: "images/instagram.svg",
+    instagram_mono: "images/instagram_mono.svg",
+    instagram_blue: "images/instagram_blue.svg",
+    instagram_red: "images/instagram_red.svg",
     youtube: "images/youtube.svg",
+    youtube_mono: "images/youtube_mono.svg",
+    youtube_blue: "images/youtube_blue.svg",
+    youtube_red: "images/youtube_red.svg",
     tiktok: "images/tiktok.svg",
+    tiktok_mono: "images/tiktok_mono.svg",
+    tiktok_blue: "images/tiktok_blue.svg",
+    tiktok_red: "images/tiktok_red.svg",
     whatsapp: "images/whatsapp.svg",
+    whatsapp_mono: "images/whatsapp_mono.svg",
+    whatsapp_blue: "images/whatsapp_blue.svg",
+    whatsapp_red: "images/whatsapp_red.svg",
     telegram: "images/telegram.svg",
+    telegram_mono: "images/telegram_mono.svg",
+    telegram_blue: "images/telegram_blue.svg",
+    telegram_red: "images/telegram_red.svg",
     eco: "images/eco.png",
   },
   bannerImage: "images/baner_lineas.png",
@@ -29,7 +50,11 @@ export async function loadStaticImagesToBase64() {
 
   for (const key in config.socialIcons) {
     if (key !== 'eco') {
-      config.base64Images[key] = await getFileAsBase64(config.socialIcons[key]);
+      try {
+        config.base64Images[key] = await getFileAsBase64(config.socialIcons[key]);
+      } catch (error) {
+        console.warn(`No se pudo cargar la imagen: ${config.socialIcons[key]}`, error);
+      }
     }
   }
 }
@@ -60,7 +85,7 @@ export function setupSignatureGeneration() {
   });
 }
 
-// Copiar firma como HTML
+// Copiar firma como HTML simulando selección manual
 export async function setupCopyHTML() {
   document.getElementById("copy-html").addEventListener("click", async () => {
     const signatureOutput = document.getElementById("signatureOutput");
@@ -71,34 +96,25 @@ export async function setupCopyHTML() {
     }
 
     try {
-      // Intentar usar ClipboardItem para navegadores modernos
-      if (navigator.clipboard && window.ClipboardItem) {
-        const blob = new Blob([signatureHTML], { type: 'text/html' });
-        const clipboardItem = new ClipboardItem({ 'text/html': blob });
-        await navigator.clipboard.write([clipboardItem]);
-        showMessage("Firma copiada como HTML al portapapeles.", "success");
+      // Simular selección y copiado manual
+      const range = document.createRange();
+      range.selectNodeContents(signatureOutput);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      // Copiar el contenido seleccionado
+      const success = document.execCommand('copy');
+      selection.removeAllRanges(); // Limpiar selección
+
+      if (success) {
+        showMessage("Firma copiada al portapapeles (simulando selección manual).", "success");
       } else {
-        // Fallback para navegadores que no soportan ClipboardItem
-        const textArea = document.createElement("textarea");
-        textArea.value = signatureHTML;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-          document.execCommand('copy');
-          showMessage("Firma copiada como HTML al portapapeles.", "success");
-        } catch (err) {
-          console.error("Error en fallback de copiado:", err);
-          showMessage("Error al copiar la firma. Intenta manualmente.", "error");
-        }
-        document.body.removeChild(textArea);
+        throw new Error("execCommand falló");
       }
     } catch (error) {
-      console.error("Error al copiar HTML:", error);
-      showMessage("Error al copiar la firma. Tu navegador podría no ser compatible.", "error");
+      console.error("Error al copiar simulando selección:", error);
+      showMessage("Error al copiar la firma. Intenta seleccionar manualmente y copiar.", "error");
     }
   });
 }
@@ -201,6 +217,7 @@ export function saveFormData() {
     "line-width": document.getElementById("line-width").value,
     "logo-type": document.getElementById("logo-type").value,
     "logo-color": document.getElementById("logo-color").value,
+    "social-icon-color": document.getElementById("social-icon-color").value,
   };
 
   localStorage.setItem('signatureFormData', JSON.stringify(formData));
@@ -289,7 +306,7 @@ export function setupResetForm() {
     }
     const logoColorPicker = document.getElementById("logo-color");
     if (logoColorPicker) {
-      logoColorPicker.value = "#FF0000";
+      logoColorPicker.value = "#e22721";
     }
     const logoInput = document.getElementById("logo-upload");
     if (logoInput) {
@@ -357,6 +374,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(`Color Línea Cambiado: ${input.value}`);
       }
       saveFormData();
+      // Regenerar firma si cambia el color de iconos sociales
+      if (input.id === 'social-icon-color') {
+        const activeButton = document.querySelector('.button-40[data-type].active');
+        if (activeButton) {
+          generateSignature(activeButton.dataset.type, config);
+        }
+      }
     });
   });
 

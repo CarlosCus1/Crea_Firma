@@ -1,14 +1,16 @@
-# Generador de Firmas de Correo Electrónico
+# Generador de Firmas de Correo Electrónico v3.0
 
-Un generador web moderno y eficiente para crear firmas de correo electrónico personalizadas con soporte completo para imágenes embebidas y copiado universal.
+Un generador web moderno y eficiente para crear firmas de correo electrónico personalizadas con soporte completo para imágenes embebidas y copiado universal. Versión 3.0 con mejoras significativas en la interfaz y funcionalidad.
 
 ## 🚀 Características Principales
 
 ### ✨ Generación de Firmas
 - **3 tipos de firma**: Completa, Media y Corta
 - **Logos personalizables**: Logo 1 (relleno sólido) y Logo 2 (contorno grueso)
-- **Colores dinámicos**: Personalización de colores para logos y líneas
+- **Colores dinámicos**: Personalización de colores para logos, líneas e iconos sociales
 - **Subida de imágenes**: Soporte para logos personalizados con compresión automática
+- **Layout mejorado**: Separación clara entre formulario y resultados (v3.0)
+- **Interfaz optimizada**: Espaciado reducido y mejor organización visual (v3.0)
 
 ### 🎨 Elementos de Firma
 - Información personal (Nombre, Cargo, Teléfono, Extensión)
@@ -90,14 +92,15 @@ python -m http.server 8000
    - Enlaces a redes sociales
 
 3. **Personalización visual**:
-   - Selecciona tipo de logo (1: relleno, 2: contorno)
-   - Elige colores para logo y línea divisoria
+   - Selecciona tipo de logo (1: relleno, 2: contorno) o sube imagen personalizada
+   - Elige colores para logo, línea divisoria e iconos sociales (4 opciones: original, monocromático, azul, rojo)
    - Ajusta ancho de línea divisoria
 
 4. **Generación y copiado**:
    - Selecciona tipo de firma (Completa/Media/Corta)
    - Copia como HTML (para emails) o texto plano
    - La firma se pega automáticamente en cualquier cliente de correo
+   - Interfaz dividida: formulario arriba, resultados abajo (v3.0)
 
 ## 🔧 Características Técnicas
 
@@ -115,6 +118,12 @@ python -m http.server 8000
 - **Lazy loading**: Carga diferida de imágenes
 - **Compresión**: Reducción de tamaño de archivos
 - **Cache inteligente**: Reutilización de conversiones base64
+
+### Mejoras v3.0
+- **Layout dividido**: Separación clara entre formulario y resultados
+- **Espaciado optimizado**: Márgenes y padding reducidos para mejor densidad visual
+- **Selector de colores sociales**: 4 opciones de color para iconos sociales
+- **Interfaz más compacta**: Mejor aprovechamiento del espacio disponible
 
 ## 🎨 Personalización
 
