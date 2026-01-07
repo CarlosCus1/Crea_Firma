@@ -1,33 +1,58 @@
 /* Variables globales - Versión 3.0 */
 :root {
   /* Colores de la interfaz con alto contraste WCAG AA */
-  --primary-color-dark: #E0E0E0; /* Gris claro para texto en tema oscuro (contraste alto) */
-  --primary-color-light: #212121; /* Gris oscuro para texto en tema claro (contraste alto) */
-  --dark-bg: #000000; /* Fondo oscuro general */
-  --light-bg: #FFFFFF; /* Fondo claro general */
-  --form-bg-dark: #2A2A2A; /* Fondo de formulario oscuro (mejor contraste) */
-  --form-bg-light: #F8F8F8; /* Fondo de formulario claro (mejor contraste) */
-  --input-bg-dark: #424242; /* Fondo de input oscuro (contraste mejorado) */
-  --input-bg-light: #FFFFFF; /* Fondo de input claro */
-  --button-bg: #005792; /* Azul Océano para botones */
-  --button-hover: #00796B; /* Verde Azulado para hover de botones */
-  --button-active: #004D40; /* Verde Azulado Oscuro para active de botones */
-  --success-color: #4CAF50; /* Verde para mensajes de éxito */
-  --error-color: #D32F2F; /* Rojo para mensajes de error */
-  --warning-color: #FFC107; /* Ámbar para mensajes de advertencia */
-  --info-color: #2196F3; /* Azul para mensajes de información */
-  --signature-bg: #FFFFFF; /* Fondo de la firma (siempre claro para legibilidad) */
-  --text-dark: #212121; /* Color de texto oscuro para la firma (contraste alto) */
-  --text-light: #FFFFFF; /* Color de texto claro para botones */
-  --modal-bg: rgba(0, 0, 0, 0.8); /* Fondo de modal (más opaco) */
-  --input-border-color: #444; /* Borde de inputs por defecto */
+  --primary-color-dark: #E0E0E0;
+  /* Gris claro para texto en tema oscuro (contraste alto) */
+  --primary-color-light: #212121;
+  /* Gris oscuro para texto en tema claro (contraste alto) */
+  --dark-bg: #000000;
+  /* Fondo oscuro general */
+  --light-bg: #FFFFFF;
+  /* Fondo claro general */
+  --form-bg-dark: #2A2A2A;
+  /* Fondo de formulario oscuro (mejor contraste) */
+  --form-bg-light: #F8F8F8;
+  /* Fondo de formulario claro (mejor contraste) */
+  --input-bg-dark: #424242;
+  /* Fondo de input oscuro (contraste mejorado) */
+  --input-bg-light: #FFFFFF;
+  /* Fondo de input claro */
+  --button-bg: #005792;
+  /* Azul Océano para botones */
+  --button-hover: #00796B;
+  /* Verde Azulado para hover de botones */
+  --button-active: #004D40;
+  /* Verde Azulado Oscuro para active de botones */
+  --success-color: #4CAF50;
+  /* Verde para mensajes de éxito */
+  --error-color: #D32F2F;
+  /* Rojo para mensajes de error */
+  --warning-color: #FFC107;
+  /* Ámbar para mensajes de advertencia */
+  --info-color: #2196F3;
+  /* Azul para mensajes de información */
+  --signature-bg: #FFFFFF;
+  /* Fondo de la firma (siempre claro para legibilidad) */
+  --text-dark: #212121;
+  /* Color de texto oscuro para la firma (contraste alto) */
+  --text-light: #FFFFFF;
+  /* Color de texto claro para botones */
+  --modal-bg: rgba(0, 0, 0, 0.8);
+  /* Fondo de modal (más opaco) */
+  --input-border-color: #444;
+  /* Borde de inputs por defecto */
 
   /* Colores de línea de la firma (sugerencias para bordes suaves y claros) */
-  --line-color-soft-blue: #A7D9F0; /* Azul suave y claro */
-  --line-color-soft-green: #B2EBF2; /* Verde azulado suave y claro */
-  --line-color-soft-grey: #CFD8DC; /* Gris azulado suave y claro */
-  --line-color-soft-purple: #E1BEE7; /* Púrpura suave y claro */
-  --line-color-soft-orange: #FFCC80; /* Naranja suave y claro */
+  --line-color-soft-blue: #A7D9F0;
+  /* Azul suave y claro */
+  --line-color-soft-green: #B2EBF2;
+  /* Verde azulado suave y claro */
+  --line-color-soft-grey: #CFD8DC;
+  /* Gris azulado suave y claro */
+  --line-color-soft-purple: #E1BEE7;
+  /* Púrpura suave y claro */
+  --line-color-soft-orange: #FFCC80;
+  /* Naranja suave y claro */
 }
 
 /* Estilos base y temas */
@@ -37,10 +62,12 @@ body {
   padding: 20px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 body.dark-theme {
   background-color: var(--dark-bg);
   color: var(--primary-color-dark);
 }
+
 body.light-theme {
   background-color: var(--light-bg);
   color: var(--primary-color-light);
@@ -72,9 +99,11 @@ body.light-theme {
 .result-section {
   flex: 1;
 }
+
 body.dark-theme .form-container {
   background-color: var(--form-bg-dark);
 }
+
 body.light-theme .form-container {
   background-color: var(--form-bg-light);
 }
@@ -90,13 +119,16 @@ body.light-theme .form-container {
   background: linear-gradient(135deg, rgba(0, 121, 107, 0.1), rgba(0, 121, 107, 0.05));
   border-radius: 15px 15px 0 0;
 }
+
 .header-controls h2 {
   color: var(--primary-color-light);
   margin: 0;
 }
+
 body.dark-theme .header-controls h2 {
   color: var(--primary-color-dark);
 }
+
 .theme-toggle {
   background: none;
   border: none;
@@ -105,9 +137,11 @@ body.dark-theme .header-controls h2 {
   transition: transform 0.3s ease;
   color: var(--primary-color-light);
 }
+
 body.dark-theme .theme-toggle {
   color: var(--primary-color-dark);
 }
+
 .theme-toggle:hover {
   transform: rotate(20deg) scale(1.1);
 }
@@ -124,10 +158,26 @@ body.dark-theme .theme-toggle {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 .form-row:hover {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(0, 121, 107, 0.3);
 }
+
+.form-row.row-center {
+  justify-content: center;
+  gap: 20px;
+}
+
+.form-row.row-center .label-10 {
+  flex: none;
+  margin-right: 0;
+}
+
+.form-row.row-center .logo-preview {
+  margin-left: 0;
+}
+
 .form-row:last-child {
   margin-bottom: 25px;
 }
@@ -138,12 +188,14 @@ body.dark-theme .theme-toggle {
   border: 2px solid rgba(0, 121, 107, 0.15);
   box-shadow: 0 2px 8px rgba(0, 121, 107, 0.1);
 }
+
 .form-row.data-fields:hover {
   background: linear-gradient(135deg, rgba(0, 121, 107, 0.08), rgba(0, 121, 107, 0.04));
   border-color: rgba(0, 121, 107, 0.4);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 121, 107, 0.15);
 }
+
 .label-10 {
   flex: 10%;
   text-align: right;
@@ -151,9 +203,11 @@ body.dark-theme .theme-toggle {
   font-weight: 500;
   color: var(--primary-color-light, #212121);
 }
+
 body.dark-theme .label-10 {
   color: var(--primary-color-dark, #e0e0e0);
 }
+
 .input-35 {
   flex: 35%;
   border: 2px solid var(--input-border-color, #444);
@@ -165,30 +219,101 @@ body.dark-theme .label-10 {
   font-size: 14px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 body.dark-theme .input-35 {
   background-color: var(--input-bg-dark, #424242);
   color: var(--primary-color-dark, #e0e0e0);
   border-color: var(--input-border-color, #444);
 }
+
 body.light-theme .input-35 {
   background-color: var(--input-bg-light, #ffffff);
   color: var(--primary-color-light, #212121);
   --input-border-color: #ddd;
 }
+
 .input-35:focus {
   outline: none;
   border-color: var(--button-hover);
   box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.05);
   transform: translateY(-1px);
 }
+
 .input-35.error {
   border-color: var(--error-color);
 }
+
+.field-error {
+  color: var(--error-color);
+  font-size: 12px;
+  margin-left: 8px;
+  display: none;
+}
+
+/* Tooltips accesibles y discretos */
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.tooltip-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--button-hover);
+  color: var(--text-light);
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  cursor: help;
+  user-select: none;
+}
+
+.tooltip-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 130%;
+  background: rgba(33, 33, 33, 0.95);
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  min-width: 220px;
+  max-width: 320px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  font-size: 13px;
+  white-space: normal;
+  z-index: 10;
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(33, 33, 33, 0.95) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text,
+.tooltip:focus-within .tooltip-text {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .input-group {
   position: relative;
   display: flex;
   align-items: center;
-  flex: 35%; /* Make it take the same space as input-35 */
+  flex: 35%;
+  /* Make it take the same space as input-35 */
   border: 2px solid var(--input-border-color, #444);
   border-radius: 10px;
   padding: 10px 14px;
@@ -196,6 +321,7 @@ body.light-theme .input-35 {
   background-color: var(--input-bg-light, #ffffff);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 .input-group:focus-within {
   border-color: var(--button-hover);
   box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -229,6 +355,8 @@ body.light-theme .input-35 {
   border-radius: 8px;
   overflow: hidden;
   display: none;
+  justify-content: center;
+  align-items: center;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -237,12 +365,23 @@ body.light-theme .input-35 {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 body.dark-theme .logo-preview {
   background-color: var(--input-bg-dark, #424242);
   border-color: var(--input-border-color, #444);
 }
+
 .logo-preview.show {
-  display: block;
+  display: flex;
+}
+
+.logo-preview img,
+.logo-preview svg {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 /* Estilos para color pickers y slider */
@@ -255,14 +394,17 @@ body.dark-theme .logo-preview {
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 .color-picker:hover {
   border-color: var(--button-hover);
   transform: scale(1.05);
 }
+
 body.dark-theme .color-picker {
   background-color: var(--input-bg-dark, #424242);
   border-color: var(--input-border-color, #444);
 }
+
 .slider {
   cursor: pointer;
   background: var(--input-bg-light, #ffffff);
@@ -273,6 +415,7 @@ body.dark-theme .color-picker {
   -webkit-appearance: none;
   appearance: none;
 }
+
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -285,10 +428,12 @@ body.dark-theme .color-picker {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
+
 .slider::-webkit-slider-thumb:hover {
   background: var(--button-hover);
   transform: scale(1.1);
 }
+
 .slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
@@ -298,11 +443,13 @@ body.dark-theme .color-picker {
   border: 2px solid #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
 .value-display {
   margin-left: 10px;
   font-weight: bold;
   color: var(--primary-color-light);
 }
+
 body.dark-theme .value-display {
   color: var(--primary-color-dark);
 }
@@ -317,6 +464,7 @@ select.input-35 {
   background-position: right 12px center;
   background-size: 10px;
 }
+
 body.dark-theme select.input-35 {
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23cccccc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
 }
@@ -334,6 +482,7 @@ body.dark-theme select.input-35 {
   background: linear-gradient(135deg, rgba(0, 121, 107, 0.05), rgba(0, 121, 107, 0.02));
   border-radius: 0 0 10px 10px;
 }
+
 .button-40 {
   flex: 1;
   max-width: 40%;
@@ -348,15 +497,19 @@ body.dark-theme select.input-35 {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 .button-40:hover {
   background-color: var(--button-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 121, 107, 0.3); /* Verde Azulado */
+  box-shadow: 0 4px 8px rgba(0, 121, 107, 0.3);
+  /* Verde Azulado */
 }
+
 .button-40:active {
   background-color: var(--button-active);
   transform: translateY(0);
 }
+
 .button-40.active {
   background-color: var(--button-active);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -373,17 +526,21 @@ body.dark-theme select.input-35 {
   transition: all 0.3s ease;
   font-weight: 500;
 }
+
 .status-message.show {
   opacity: 1;
 }
+
 .status-message.success {
   background-color: var(--success-color);
   color: white;
 }
+
 .status-message.error {
   background-color: var(--error-color);
   color: white;
 }
+
 .status-message.info {
   background-color: var(--info-color);
   color: white;
@@ -402,18 +559,22 @@ body.dark-theme select.input-35 {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
+
 body.dark-theme .signature-container {
   background-color: var(--form-bg-dark);
   color: var(--primary-color-dark);
 }
+
 .signature-container:not(:empty) {
   animation: fadeIn 0.5s ease-out;
 }
+
 .signature-container a {
   color: var(--text-dark);
   text-decoration: none;
   transition: color 0.2s ease;
 }
+
 .signature-container a:hover {
   color: var(--button-hover);
   text-decoration: underline;
@@ -431,7 +592,8 @@ body.dark-theme .signature-container {
 
 /* Estilos para las opciones de color en el select */
 .color-option {
-  color: white; /* Por defecto, texto blanco para colores oscuros */
+  color: white;
+  /* Por defecto, texto blanco para colores oscuros */
 }
 
 /* Ajustes específicos para colores claros en el select */
@@ -455,7 +617,18 @@ body.dark-theme .signature-container {
 .signature-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: transparent;
+}
+
+.signature-table .logo-cell {
+  padding-right: 6px;
+}
+
+.signature-table .signature-info-cell {
+  padding-left: 6px;
+}
+
+.signature-table .signature-main-row td {
+  vertical-align: middle;
 }
 
 .signature-main-row {
@@ -575,10 +748,12 @@ body.dark-theme .signature-container {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .modal.show {
   display: flex;
   opacity: 1;
 }
+
 .modal-content {
   background-color: white;
   padding: 25px;
@@ -587,29 +762,46 @@ body.dark-theme .signature-container {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
   position: relative;
 }
+
 body.dark-theme .modal-content {
   background-color: var(--form-bg-dark);
   color: var(--primary-color-dark);
 }
+
 #modal-message {
   margin: 0;
   font-size: 16px;
   color: black;
   text-align: center;
 }
+
 body.dark-theme #modal-message {
   color: var(--primary-color-dark);
 }
 
 /* Animaciones */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
+
 .status-message.auto-hide {
   animation: fadeOut 3s forwards;
 }
@@ -621,37 +813,29 @@ body.dark-theme #modal-message {
     padding: 15px;
     flex-direction: column;
   }
+
   .form-section,
   .result-section {
     flex: none;
   }
+
   .form-row {
     flex-direction: column;
     align-items: flex-start;
   }
-  .label-10,
-  .input-35,
-  .input-group {
-    flex-basis: 100%;
-    flex-grow: 1;
-    width: 100%;
-    margin: 5px 0;
+
+  .label-10 {
     text-align: left;
+    margin-bottom: 5px;
+    width: 100%;
   }
+
+  .input-35 {
+    width: 100%;
+    flex: none;
+  }
+
   .button-40 {
     max-width: 100%;
-    margin: 5px 0;
-    min-width: 100%;
-  }
-  .logo-preview {
-    width: 90px;
-    height: 90px;
-    margin-top: 10px;
-    margin-left: 0;
-  }
-}
-@media (min-width: 768px) and (max-width: 1024px) {
-  .form-container {
-    width: 80%;
   }
 }

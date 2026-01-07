@@ -1,19 +1,30 @@
-// Función para generar enlaces dinámicos con validación de URL
+/**
+ * utils.js
+ * Propósito: Funciones de utilidad para manipulación de archivos, 
+ * conversión de imágenes y notificaciones de la interfaz.
+ */
+
+/**
+ * Genera un enlace HTML dinámico con validación básica.
+ * @param {string} type - Tipo de enlace ('tel', 'email', etc.).
+ * @param {string} value - Valor del enlace (número, correo).
+ * @param {string} text - Texto a mostrar.
+ * @param {string} urlTemplate - Plantilla de la URL con marcadores {value} y {text}.
+ * @returns {string} HTML del enlace generado.
+ */
 export function generateLink(type, value, text, urlTemplate) {
   if (!value) return "";
   let cleanValue = value;
   if (type === "tel") {
-    // Para teléfonos, permite números y el punto y coma para extensiones
     cleanValue = value.replace(/[^0-9;]/g, "");
   } else {
-    // Para otros tipos, limpia todos los no dígitos
     cleanValue = value.replace(/\D/g, "");
   }
-  
+
   try {
     const formattedUrl = urlTemplate
       .replace("{value}", cleanValue)
-      .replace("{text}", encodeURIComponent(text)); // Codifica texto para evitar errores en URLs
+      .replace("{text}", encodeURIComponent(text));
     return `<a href="${formattedUrl}" class="signature-link">${value}</a>`;
   } catch (error) {
     console.error("Error al formatear el enlace:", error);
@@ -21,7 +32,14 @@ export function generateLink(type, value, text, urlTemplate) {
   }
 }
 
-// Convertir imagen a base64 con manejo de errores, redimensionamiento y compresión
+/**
+ * Convierte un archivo de imagen a una cadena Base64, 
+ * redimensionándola y comprimiéndola para optimizar el tamaño.
+ * @param {File} file - El archivo de imagen.
+ * @param {number} maxWidth - Ancho máximo permitido.
+ * @param {number} maxHeight - Alto máximo permitido.
+ * @returns {Promise<string>} Promesa que resuelve con la cadena Base64.
+ */
 export async function fileToBase64(file, maxWidth = 90, maxHeight = 90) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -32,7 +50,6 @@ export async function fileToBase64(file, maxWidth = 90, maxHeight = 90) {
         let width = img.width;
         let height = img.height;
 
-        // Calcular nuevas dimensiones manteniendo la proporción
         if (width > height) {
           if (width > maxWidth) {
             height *= maxWidth / width;
@@ -50,49 +67,42 @@ export async function fileToBase64(file, maxWidth = 90, maxHeight = 90) {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Optimizar: usar calidad reducida para reducir tamaño
-        let quality = 0.7; // Calidad más baja para mejor compresión
+        let quality = 0.7;
         if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
           quality = 0.7;
         } else if (file.type === 'image/png') {
-          quality = 0.8; // PNG puede mantener mejor calidad
+          quality = 0.8;
         }
         resolve(canvas.toDataURL(file.type, quality));
       };
-      img.onerror = (error) => {
-        reject(error);
-      };
+      img.onerror = (error) => reject(error);
       img.src = event.target.result;
     };
-    reader.onerror = (error) => {
-      reject(error);
-    };
+    reader.onerror = (error) => reject(error);
     reader.readAsDataURL(file);
   });
 }
 
-// Obtener archivo como Base64 desde una URL (para imágenes locales) con compresión
+/**
+ * Obtiene el contenido de una URL y lo convierte a Base64.
+ * Útil para incrustar imágenes locales en el HTML de la firma.
+ * @param {string} url - La URL de la imagen.
+ * @returns {Promise<string|null>} Base64 de la imagen o null si falla.
+ */
 export async function getFileAsBase64(url) {
   try {
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const blob = await response.blob();
 
-    // Comprimir imagen antes de convertir a base64
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-
-        // Mantener tamaño original pero comprimir calidad
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
-
-        // Usar compresión para reducir tamaño
         const compressedBase64 = canvas.toDataURL('image/png', 0.8);
         resolve(compressedBase64);
       };
@@ -106,11 +116,18 @@ export async function getFileAsBase64(url) {
       reader.readAsDataURL(blob);
     });
   } catch (error) {
-    return null; // Retorna null en caso de error
+    return null;
   }
 }
 
-// Convertir SVG string a PNG base64 para mejor compatibilidad con compresión
+/**
+ * Convierte una cadena SVG a una imagen PNG en formato Base64.
+ * Mejora la compatibilidad en clientes de correo que no soportan SVG.
+ * @param {string} svgString - El contenido del SVG.
+ * @param {number} width - Ancho deseado.
+ * @param {number} height - Alto deseado.
+ * @returns {Promise<string>} Base64 del PNG generado.
+ */
 export function svgToPngBase64(svgString, width = 90, height = 90) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -122,38 +139,38 @@ export function svgToPngBase64(svgString, width = 90, height = 90) {
 
     img.onload = () => {
       ctx.drawImage(img, 0, 0, width, height);
-      // Usar compresión para reducir tamaño
-      resolve(canvas.toDataURL('image/png', 0.8));
+      const dataUrl = canvas.toDataURL('image/png', 0.8);
+      URL.revokeObjectURL(img.src);
+      resolve(dataUrl);
     };
 
     img.onerror = reject;
 
-    // Crear una URL de datos para el SVG
     const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(svgBlob);
     img.src = url;
   });
 }
 
-// Mostrar mensaje temporal utilizando el elemento #status-message
+/**
+ * Muestra un mensaje temporal en la interfaz de usuario.
+ * @param {string} message - El texto del mensaje.
+ * @param {string} type - Tipo de mensaje ('success', 'error', 'info').
+ */
 export function showMessage(message, type) {
   const statusMessageElement = document.getElementById("status-message");
-  if (!statusMessageElement) {
-    console.error("Elemento #status-message no encontrado.");
-    return;
-  }
+  if (!statusMessageElement) return;
 
   statusMessageElement.textContent = message;
-  statusMessageElement.className = "status-message show"; // Reset classes
+  statusMessageElement.className = "status-message show";
   statusMessageElement.classList.add(type);
 
-  // Auto-hide after 5 seconds
   setTimeout(() => {
     statusMessageElement.classList.remove("show");
-    statusMessageElement.classList.add("auto-hide"); // Add class for fadeOut animation
+    statusMessageElement.classList.add("auto-hide");
     setTimeout(() => {
-      statusMessageElement.className = "status-message"; // Clean up classes after animation
+      statusMessageElement.className = "status-message";
       statusMessageElement.textContent = "";
-    }, 500); // Match fadeOut animation duration
+    }, 500);
   }, 5000);
 }

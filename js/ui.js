@@ -1,8 +1,18 @@
+/**
+ * ui.js
+ * Propósito: Gestión de la interfaz de usuario (UI) y eventos del DOM.
+ * Este módulo maneja la persistencia de datos, la configuración de botones,
+ * las previsualizaciones en vivo y la inicialización de la aplicación.
+ */
+
 import { showMessage } from './utils.js';
 import { generateSignature } from './generator.js';
 import { validateFields } from './validation.js';
 
-// Configuración global
+/**
+ * Configuración global de la aplicación.
+ * Contiene rutas de imágenes, iconos sociales y valores por defecto.
+ */
 export const config = {
   defaultLogo: "images/logo_cip.png",
   socialIcons: {
@@ -34,6 +44,18 @@ export const config = {
     telegram_mono: "images/telegram_mono.svg",
     telegram_blue: "images/telegram_blue.svg",
     telegram_red: "images/telegram_red.svg",
+    email: "images/email_icon.svg",
+    email_mono: "images/email_icon_mono.svg",
+    email_blue: "images/email_icon_blue.svg",
+    email_red: "images/email_icon_red.svg",
+    phone_icon: "images/phone_icon.svg",
+    phone_icon_mono: "images/phone_icon_mono.svg",
+    phone_icon_blue: "images/phone_icon_blue.svg",
+    phone_icon_red: "images/phone_icon_red.svg",
+    mobile_icon: "images/mobile_icon.svg",
+    mobile_icon_mono: "images/mobile_icon_mono.svg",
+    mobile_icon_blue: "images/mobile_icon_blue.svg",
+    mobile_icon_red: "images/mobile_icon_red.svg",
     eco: "images/eco.png",
   },
   bannerImage: "images/baner_lineas.png",
@@ -41,7 +63,10 @@ export const config = {
   base64Images: {},
 };
 
-// Cargar imágenes estáticas a Base64
+/**
+ * Carga todas las imágenes estáticas y las convierte a Base64 para su uso en la firma.
+ * Esto evita problemas de carga de imágenes externas en clientes de correo.
+ */
 export async function loadStaticImagesToBase64() {
   const { getFileAsBase64 } = await import('./utils.js');
   config.base64Images.defaultLogo = await getFileAsBase64(config.defaultLogo);
@@ -59,12 +84,9 @@ export async function loadStaticImagesToBase64() {
   }
 }
 
-// Toggle de tema (removido por no funcionar)
-export function setupThemeToggle() {
-  // Función vacía - toggle removido del HTML
-}
-
-// Generar firma según tipo
+/**
+ * Configura los botones de generación de firma (Completa, Media, Corta).
+ */
 export function setupSignatureGeneration() {
   document.querySelectorAll(".button-40[data-type]").forEach((button) => {
     button.addEventListener("click", async () => {
@@ -85,7 +107,9 @@ export function setupSignatureGeneration() {
   });
 }
 
-// Copiar firma como HTML simulando selección manual
+/**
+ * Configura el botón para copiar el HTML de la firma al portapapeles.
+ */
 export async function setupCopyHTML() {
   document.getElementById("copy-html").addEventListener("click", async () => {
     const signatureOutput = document.getElementById("signatureOutput");
@@ -96,35 +120,36 @@ export async function setupCopyHTML() {
     }
 
     try {
-      // Simular selección y copiado manual
       const range = document.createRange();
       range.selectNodeContents(signatureOutput);
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
 
-      // Copiar el contenido seleccionado
       const success = document.execCommand('copy');
-      selection.removeAllRanges(); // Limpiar selección
+      selection.removeAllRanges();
 
       if (success) {
-        showMessage("Firma copiada al portapapeles (simulando selección manual).", "success");
+        showMessage("Firma copiada al portapapeles.", "success");
       } else {
         throw new Error("execCommand falló");
       }
     } catch (error) {
-      console.error("Error al copiar simulando selección:", error);
-      showMessage("Error al copiar la firma. Intenta seleccionar manualmente y copiar.", "error");
+      console.error("Error al copiar:", error);
+      showMessage("Error al copiar la firma.", "error");
     }
   });
 }
 
-// Copiar firma como texto
+/**
+ * Configura el botón para copiar la información de la firma como texto plano.
+ */
 export function setupCopyText() {
   document.getElementById("copy-text").addEventListener("click", () => {
     const fields = {
       name: document.getElementById("name").value.trim(),
       position: document.getElementById("position").value.trim(),
+      email: document.getElementById("email").value.trim(),
       phone: document.getElementById("phone").value.trim(),
       extension: document.getElementById("extension").value.trim(),
       mobile: document.getElementById("mobile").value.trim(),
@@ -141,6 +166,7 @@ export function setupCopyText() {
     }
 
     let textToCopy = `${fields.name}\n${fields.position}\n`;
+    if (fields.email) textToCopy += `Correo: ${fields.email}\n`;
 
     if (fields.phone) {
       textToCopy += `Teléfono: ${fields.phone}`;
@@ -158,7 +184,6 @@ export function setupCopyText() {
       textToCopy += `Celular 2: ${fields.mobile2}\n`;
     }
 
-    // Agregar redes sociales si están presentes
     const socialLinks = [];
     if (fields.facebook) socialLinks.push(`Facebook: ${fields.facebook}`);
     if (fields.instagram) socialLinks.push(`Instagram: ${fields.instagram}`);
@@ -171,7 +196,7 @@ export function setupCopyText() {
 
     navigator.clipboard.writeText(textToCopy.trim())
       .then(() => {
-        showMessage("Información completa copiada al portapapeles", "success");
+        showMessage("Información copiada como texto", "success");
       })
       .catch(err => {
         console.error("Error al copiar texto:", err);
@@ -180,7 +205,9 @@ export function setupCopyText() {
   });
 }
 
-// Quitar logo (si existe)
+/**
+ * Configura el botón para eliminar el logo subido.
+ */
 export function setupRemoveLogo() {
   const removeButton = document.getElementById("remove-logo");
   if (removeButton) {
@@ -197,11 +224,14 @@ export function setupRemoveLogo() {
   }
 }
 
-// Persistencia de datos en localStorage
+/**
+ * Guarda los datos del formulario en localStorage para persistencia.
+ */
 export function saveFormData() {
   const formData = {
     name: document.getElementById("name").value,
     position: document.getElementById("position").value,
+    email: document.getElementById("email").value,
     phone: document.getElementById("phone").value,
     extension: document.getElementById("extension").value,
     mobile: document.getElementById("mobile").value,
@@ -218,11 +248,16 @@ export function saveFormData() {
     "logo-type": document.getElementById("logo-type").value,
     "logo-color": document.getElementById("logo-color").value,
     "social-icon-color": document.getElementById("social-icon-color").value,
+    "banner-link": document.getElementById("banner-link").value,
+    "banner-alt": document.getElementById("banner-alt").value,
   };
 
   localStorage.setItem('signatureFormData', JSON.stringify(formData));
 }
 
+/**
+ * Carga los datos del formulario desde localStorage.
+ */
 export function loadFormData() {
   const savedData = localStorage.getItem('signatureFormData');
   if (savedData) {
@@ -235,120 +270,121 @@ export function loadFormData() {
         } else {
           element.value = formData[key];
         }
-      } else {
-        console.warn(`Elemento con ID "${key}" no encontrado para cargar datos.`);
       }
     });
   }
 }
 
-// Actualizar previsualización del SVG en vivo
+/**
+ * Actualiza la previsualización del SVG en vivo según el tipo y color seleccionado.
+ */
 export async function updateSvgPreview() {
   const logoType = document.getElementById("logo-type").value;
   const logoColor = document.getElementById("logo-color").value;
 
-  // Log de valores seleccionados
-  console.log(`Tipo de Logo: ${logoType}, Color Logo: ${logoColor}`);
-
-  const { generateSvgHTML1, generateSvgHTML2 } = await import('./generator.js');
-  let svgHTML;
+  let svgText = '';
   if (logoType === 'logo1') {
-    svgHTML = generateSvgHTML1(logoColor);
+    const resp = await fetch('images/logo1.svg');
+    svgText = await resp.text();
+    svgText = svgText.replace(/fill="#[0-9A-Fa-f]{3,6}"/, `fill="${logoColor}"`);
   } else if (logoType === 'logo2') {
-    svgHTML = generateSvgHTML2(logoColor);
-  } else {
-    svgHTML = '';
+    const resp = await fetch('images/logo2.svg');
+    svgText = await resp.text();
+    svgText = svgText.replace(/stroke="#[0-9A-Fa-f]{3,6}"/g, `stroke="${logoColor}"`);
   }
 
   const previewElement = document.getElementById("svg-preview");
   if (previewElement) {
-    previewElement.innerHTML = svgHTML;
-    if (svgHTML) {
+    if (svgText) {
+      previewElement.innerHTML = svgText;
       previewElement.classList.add("show");
     } else {
+      previewElement.innerHTML = '';
       previewElement.classList.remove("show");
     }
   }
 }
 
-// Función para loggear el color de línea
-export function logLineColor() {
-  const lineColor = document.getElementById("line-color").value;
-  console.log(`Color Línea: ${lineColor}`);
-}
-
-// Actualizar display del ancho de línea
+/**
+ * Actualiza el texto que muestra el ancho de la línea vertical.
+ */
 export function updateLineWidthDisplay() {
   const slider = document.getElementById("line-width");
   const display = document.getElementById("line-width-value");
   if (slider && display) {
     display.textContent = slider.value + "px";
-    console.log(`Ancho Línea Actualizado: ${slider.value}px`);
   }
 }
 
-
-// Reiniciar formulario
+/**
+ * Configura el botón de reinicio del formulario.
+ */
 export function setupResetForm() {
   document.getElementById("reset-form").addEventListener("click", () => {
     document.querySelector(".form-content").closest('form').reset();
     const lineColorPicker = document.getElementById("line-color");
-    if (lineColorPicker) {
-      lineColorPicker.value = config.defaultLineColor;
-    }
+    if (lineColorPicker) lineColorPicker.value = config.defaultLineColor;
+
     const lineWidthSlider = document.getElementById("line-width");
-    if (lineWidthSlider) {
-      lineWidthSlider.value = "4";
-    }
+    if (lineWidthSlider) lineWidthSlider.value = "4";
+
     const logoTypeSelect = document.getElementById("logo-type");
-    if (logoTypeSelect) {
-      logoTypeSelect.value = "logo1";
-    }
+    if (logoTypeSelect) logoTypeSelect.value = "logo1";
+
     const logoColorPicker = document.getElementById("logo-color");
-    if (logoColorPicker) {
-      logoColorPicker.value = "#e22721";
-    }
+    if (logoColorPicker) logoColorPicker.value = "#e22721";
+
     const logoInput = document.getElementById("logo-upload");
-    if (logoInput) {
-      logoInput.dataset.removed = "false";
-    }
+    if (logoInput) logoInput.dataset.removed = "false";
+
     const logoPreview = document.getElementById("logo-preview");
     if (logoPreview) {
       logoPreview.style.display = "none";
+      logoPreview.style.backgroundImage = "";
     }
+
     const signatureOutput = document.getElementById("signatureOutput");
-    if (signatureOutput) {
-      signatureOutput.innerHTML = "";
-    }
-    localStorage.removeItem('signatureFormData'); // Limpiar datos guardados
+    if (signatureOutput) signatureOutput.innerHTML = "";
+
+    localStorage.removeItem('signatureFormData');
   });
 }
 
-// Inicializar la aplicación
+/**
+ * Inicialización de la aplicación al cargar el DOM.
+ */
 document.addEventListener("DOMContentLoaded", async () => {
   await loadStaticImagesToBase64();
   loadFormData();
-  // setupThemeToggle(); // Removido: toggle de tema no funciona
   setupSignatureGeneration();
   setupCopyHTML();
   setupCopyText();
   setupRemoveLogo();
   setupResetForm();
 
-  // Configurar previsualización del SVG si los elementos existen
+  // Configurar previsualización del SVG
   const logoTypeSelect = document.getElementById("logo-type");
   const logoColorPicker = document.getElementById("logo-color");
   if (logoTypeSelect && logoColorPicker) {
     await updateSvgPreview();
+    logoTypeSelect.addEventListener('change', updateSvgPreview);
+    logoColorPicker.addEventListener('input', updateSvgPreview);
+  }
 
-    // Eventos para actualizar previsualización en vivo
-    logoTypeSelect.addEventListener('change', async () => {
-      console.log(`Tipo de Logo Cambiado: ${logoTypeSelect.value}`);
-      await updateSvgPreview();
-    });
-    logoColorPicker.addEventListener('input', async () => {
-      console.log(`Color Logo Cambiado: ${logoColorPicker.value}`);
-      await updateSvgPreview();
+  // Configurar previsualización del logo subido
+  const logoUpload = document.getElementById("logo-upload");
+  const logoPreview = document.getElementById("logo-preview");
+  if (logoUpload && logoPreview) {
+    logoUpload.addEventListener('change', async () => {
+      if (logoUpload.files && logoUpload.files[0]) {
+        const { fileToBase64 } = await import('./utils.js');
+        const base64 = await fileToBase64(logoUpload.files[0]);
+        logoPreview.style.backgroundImage = `url(${base64})`;
+        logoPreview.classList.add("show");
+      } else {
+        logoPreview.style.backgroundImage = '';
+        logoPreview.classList.remove("show");
+      }
     });
   }
 
@@ -356,37 +392,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   const lineWidthSlider = document.getElementById("line-width");
   if (lineWidthSlider) {
     updateLineWidthDisplay();
-    lineWidthSlider.addEventListener('input', async () => {
+    lineWidthSlider.addEventListener('input', () => {
       updateLineWidthDisplay();
-      // Regenerar firma si está activa
       const activeButton = document.querySelector('.button-40[data-type].active');
-      if (activeButton) {
-        await generateSignature(activeButton.dataset.type, config);
-      }
+      if (activeButton) generateSignature(activeButton.dataset.type, config);
     });
   }
 
-  // Guardar datos en cada cambio
+  // Guardar datos en cada cambio y regenerar firma si es necesario
   document.querySelectorAll('input, select').forEach(input => {
     const eventType = input.tagName === 'SELECT' ? 'change' : 'input';
     input.addEventListener(eventType, () => {
-      if (input.id === 'line-color') {
-        console.log(`Color Línea Cambiado: ${input.value}`);
-      }
       saveFormData();
-      // Regenerar firma si cambia el color de iconos sociales
-      if (input.id === 'social-icon-color') {
+      if (input.id === 'social-icon-color' || input.id === 'line-color') {
         const activeButton = document.querySelector('.button-40[data-type].active');
-        if (activeButton) {
-          generateSignature(activeButton.dataset.type, config);
-        }
+        if (activeButton) generateSignature(activeButton.dataset.type, config);
       }
     });
   });
-
-  // Agregar log específico para el color de línea
-  const lineColorPicker = document.getElementById("line-color");
-  if (lineColorPicker) {
-    lineColorPicker.addEventListener('input', logLineColor);
-  }
 });
